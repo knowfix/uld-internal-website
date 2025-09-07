@@ -53,7 +53,7 @@
                     <span class="font-medium">Dashboard</span>
                 </div>
             </a>
-            <a href="{{ route('data.mahasiswa') }}">
+            <a href="{{ route('mahasiswa.index') }}">
                 <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
                     <!-- Home Simple -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
@@ -123,8 +123,91 @@
             <!-- Teks -->
             <span class="font-medium text-2xl">Data Mahasiswa</span>
         </div>
+
         <div class="flex-1 overflow-y-auto bg-gray-100">
-            
+            <div class="bg-[#EAF3FA] px-6 py-3 flex items-center justify-between">
+                <!-- Search -->
+                <div class="relative w-72">
+                    <input type="text" placeholder="Cari mahasiswa...."
+                        class="w-full pl-4 pr-10 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1F4E79] focus:outline-none" />
+                    <button class="absolute right-3 top-2 text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-6 text-[#1F4E79] font-medium">
+                    <a href="{{ route('mahasiswa.create') }}" 
+                    class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        <span>Tambah Data</span>
+                    </a>
+                    <button class="flex items-center space-x-1 hover:text-[#163a5c]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <!-- Icon download -->
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+                        </svg>
+                        <span>Export File</span>
+                    </button>
+                    <button class="flex items-center space-x-1 hover:text-[#163a5c]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" 
+                                d="M4 6h16M4 12h8m-8 6h16" />
+                        </svg>
+                        <span>Filter</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                @if(session('success'))
+                    <div class="bg-green-100 text-green-700 p-2 rounded mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                <table class="w-full border">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="p-2 border">Nama</th>
+                            <th class="p-2 border">Fakultas</th>
+                            <th class="p-2 border">Pendidikan</th>
+                            <th class="p-2 border">Angkatan</th>
+                            <th class="p-2 border">Jenis Disabilitas</th>
+                            <th class="p-2 border">Surat Disabilitas</th>
+                            <th class="p-2 border">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($mahasiswas as $mhs)
+                        <tr>
+                            <td class="p-2 border">{{ $mhs->nama }}</td>
+                            <td class="p-2 border">{{ $mhs->fakultas }}</td>
+                            <td class="p-2 border">{{ $mhs->pendidikan }}</td>
+                            <td class="p-2 border">{{ $mhs->angkatan }}</td>
+                            <td class="p-2 border">{{ $mhs->ragam_disabilitas }}</td>
+                            <td class="border text-center">
+                                @if($mhs->surat_keterangan)
+                                <a href="{{ route('mahasiswa.download', $mhs->id) }}" class="text-blue-600 hover:underline">
+                                    Download PDF
+                                </a>
+                                @else
+                                <span class="text-gray-400">Tidak ada file</span>
+                                @endif
+                            </td>
+                            <td class="text-center border">Aksi</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </main>
