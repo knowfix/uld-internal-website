@@ -193,7 +193,13 @@
                             <td class="p-2 border">{{ $mhs->pendidikan }}</td>
                             <td class="p-2 border">{{ $mhs->angkatan }}</td>
                             <td class="p-2 border">{{ $mhs->ragam_disabilitas }}</td>
-                            <td class="border text-center">
+                            <td class="p-2 border">
+                                <a href="{{ route('mahasiswa.pdf', $mhs->id) }}" 
+                                    class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
+                                    Download PDF
+                                </a>
+                            </td>
+                            {{-- <td class="border text-center">
                                 @if($mhs->surat_keterangan)
                                 <a href="{{ route('mahasiswa.download', $mhs->id) }}" class="text-blue-600 hover:underline">
                                     Download PDF
@@ -201,7 +207,7 @@
                                 @else
                                 <span class="text-gray-400">Tidak ada file</span>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td class="text-center border">Aksi</td>
                         </tr>
                         @endforeach

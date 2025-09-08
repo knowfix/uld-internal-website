@@ -17,11 +17,13 @@ Schema::create('mahasiswas', function (Blueprint $table) {
     $table->string('nomor_hp');
     $table->string('beasiswa')->nullable();
     $table->string('ragam_disabilitas');
+    $table->string('surat_keterangan_link');
     $table->string('surat_keterangan')->nullable();
     $table->text('detail_disabilitas')->nullable();
     $table->text('alat_bantu')->nullable();
     $table->text('kendala')->nullable();
     $table->text('akomodasi')->nullable();
     $table->text('pendampingan')->nullable();
+    $table->string('pdf_path')->nullable();
     $table->timestamps();
 });

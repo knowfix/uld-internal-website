@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -35,14 +36,20 @@ class MahasiswaController extends Controller
             // masukkan ke array data
             $data['surat_keterangan'] = $filename;
         }
+        // Simpan mahasiswa ke database
+        $mahasiswa = Mahasiswa::create($data);
 
-        // if ($request->hasFile('surat_keterangan')) {
-        //     $fileName = time().'_'.$request->file('surat_keterangan')->getClientOriginalName();
-        //     $request->file('surat_keterangan')->move(public_path('uploads/surat_keterangan'), $fileName);
-        //     $data['surat_keterangan'] = $fileName;
-        // }
+        // === Generate PDF otomatis ===
+        $pdf = Pdf::loadView('mahasiswa.pdf', compact('mahasiswa'));
 
-        Mahasiswa::create($data);
+        $pdfFilename = 'mahasiswa_' . preg_replace('/[\/\\\\]/', '-', $mahasiswa->nim) . '.pdf';
+        $pdfPath = 'private/pdf_mahasiswa/' . $pdfFilename;
+
+        // Simpan ke storage/app/private/pdf_mahasiswa
+        Storage::put($pdfPath, $pdf->output());
+
+        // Update path pdf ke mahasiswa
+        $mahasiswa->update(['pdf_path' => $pdfPath]);
 
         return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil ditambahkan!');
     }
@@ -52,32 +59,52 @@ class MahasiswaController extends Controller
         return view('mahasiswa.index', compact('mahasiswas'));
     }
 
-    // public function download($id)
-    // {
-    //     $mahasiswa = Mahasiswa::findOrFail($id);
-
-    //     if (!$mahasiswa->surat_disabilitas) {
-    //         return redirect()->back()->with('error', 'File tidak ditemukan.');
-    //     }
-
-    //     return Storage::download($mahasiswa->surat_disabilitas);
-    // }
-
     public function download($id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
 
-        if (!$mahasiswa->surat_disabilitas) {
+        if (!$mahasiswa->surat_keterangan) {
             return redirect()->back()->with('error', 'File tidak tersedia.');
         }
 
-        $filePath = storage_path('app/private/surat_keterangan/' . $mahasiswa->surat_disabilitas);
+        $filePath = storage_path('app/private/surat_keterangan/' . $mahasiswa->surat_keterangan);
 
         if (!file_exists($filePath)) {
             return redirect()->back()->with('error', 'File tidak ditemukan.');
         }
 
-        return response()->download($filePath, $mahasiswa->surat_disabilitas);
+        return response()->download($filePath, $mahasiswa->surat_keterangan);
+    }
+    public function generatePdf($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        $pdf = Pdf::loadView('mahasiswa.pdf', compact('mahasiswa'));
+        
+        $filename = 'mahasiswa_' . preg_replace('/[\/\\\\]/', '-', $mahasiswa->nim) . '.pdf';
+
+        return $pdf->download($filename);
+
+    }
+    public function downloadPdf($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        if (!$mahasiswa->pdf_path) {
+            return back()->with('error', 'File PDF belum tersedia.');
+        }
+
+        $filePath = storage_path('app/' . $mahasiswa->pdf_path);
+
+        if (!file_exists($filePath)) {
+            return back()->with('error', 'File tidak ditemukan di server.');
+        }
+
+        $filename = 'mahasiswa_' . preg_replace('/[\/\\\\]/', '-', $mahasiswa->nim) . '.pdf';
+
+        return response()->download($filePath, $filename, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 
 

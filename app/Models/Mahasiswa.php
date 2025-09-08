@@ -22,10 +22,12 @@ class Mahasiswa extends Model
         'beasiswa',
         'ragam_disabilitas',
         'surat_keterangan',
+        'surat_keterangan_link',
         'detail_disabilitas',
         'alat_bantu',
         'kendala',
         'akomodasi',
         'pendampingan',
+        'pdf_path',
     ];
 }

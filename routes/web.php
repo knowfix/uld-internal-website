@@ -20,11 +20,17 @@ Route::get('/mahasiswa/create', [MahasiswaController::class, 'create'])->name('m
 Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
 Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
 
-Route::get('/mahasiswa/{id}/download', [MahasiswaController::class, 'download'])->name('mahasiswa.download');
-Route::get('/mahasiswa/{id}/download', [MahasiswaController::class, 'download'])
-    ->middleware('auth') // biar aman, hanya user login
-    ->name('mahasiswa.download');
+// Route::get('/mahasiswa/{id}/download', [MahasiswaController::class, 'download'])->name('mahasiswa.download');
+// Route::get('/mahasiswa/{id}/download', [MahasiswaController::class, 'download'])
+//     ->middleware('auth') // biar aman, hanya user login
+//     ->name('mahasiswa.download');
     
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');  
 Route::post('/login', [LoginController::class, 'login']);  
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/mahasiswa/{id}/pdf', [MahasiswaController::class, 'generatePdf'])
+    ->name('mahasiswa.pdf');
+Route::get('/mahasiswa/{id}/pdf/download', [MahasiswaController::class, 'downloadPdf'])
+    // ->middleware('auth') // opsional, biar aman hanya user login
+    ->name('mahasiswa.downloadPdf');

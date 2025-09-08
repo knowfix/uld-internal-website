@@ -202,6 +202,10 @@
                             <label class="block font-medium text-[#083D62]">Ragam Disabilitas</label>
                             <input type="text" name="ragam_disabilitas" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
                         </div>
+                        <div>
+                            <label class="block font-medium text-[#083D62]">Surat Keterangan Disabilitas</label>
+                            <input type="text" name="surat_keterangan_link" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
+                        </div>
 
                         <div>
                             <label class="block font-medium mb-1 text-[#083D62]">Surat Keterangan Disabilitas</label>
