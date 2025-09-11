@@ -139,6 +139,31 @@
 
                 <!-- Actions -->
                 <div class="flex items-center space-x-6 text-[#1F4E79] font-medium">
+                    <!-- Tombol Edit Data (hidden awalnya) -->
+                    <a id="edit-btn" href="#"
+                    class="hidden flex items-center space-x-2 text-green-800 font-medium cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" 
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                        <span>Edit Data</span>
+                    </a>
+                    <!-- Tombol Hapus Data (hidden default) -->
+                    <form id="delete-form" action="{{ route('mahasiswa.bulkDelete') }}" method="POST" class="hidden">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="ids" id="delete-ids">
+                        <button type="submit" 
+                            class="flex items-center space-x-2 text-red-600 font-medium cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" 
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3m-4 0h14"/>
+                            </svg>
+                            <span>Hapus Data</span>
+                        </button>
+                    </form>
                     <a href="{{ route('mahasiswa.create') }}" 
                     class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
@@ -176,6 +201,7 @@
                 <table class="w-full border">
                     <thead>
                         <tr class="bg-gray-200">
+                            <th class="p-2 border"></th>
                             <th class="p-2 border">Nama</th>
                             <th class="p-2 border">Fakultas</th>
                             <th class="p-2 border">Pendidikan</th>
@@ -188,6 +214,9 @@
                     <tbody>
                         @foreach($mahasiswas as $mhs)
                         <tr>
+                            <td class="p-2 border">
+                                <input type="checkbox" class="select-mahasiswa" value="{{ $mhs->id }}">
+                            </td>
                             <td class="p-2 border">{{ $mhs->nama }}</td>
                             <td class="p-2 border">{{ $mhs->fakultas }}</td>
                             <td class="p-2 border">{{ $mhs->pendidikan }}</td>
@@ -213,9 +242,46 @@
                         @endforeach
                     </tbody>
                 </table>
+                <!-- Tombol Edit (awal tersembunyi) -->
             </div>
         </div>
-
     </main>
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const checkboxes = document.querySelectorAll(".select-mahasiswa");
+    const editBtn = document.getElementById("edit-btn");
+    const deleteForm = document.getElementById("delete-form");
+    const deleteIds = document.getElementById("delete-ids");
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener("change", function () {
+            let selected = [];
+            document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
+                selected.push(el.value);
+            });
+
+            // Toggle Edit (hanya 1 terpilih)
+            if (selected.length === 1) {
+                editBtn.classList.remove("hidden");
+                editBtn.href = "/mahasiswa/" + selected[0] + "/edit";
+            } else {
+                editBtn.classList.add("hidden");
+                editBtn.href = "#";
+            }
+
+            // Toggle Delete (boleh >0)
+            if (selected.length > 0) {
+                deleteForm.classList.remove("hidden");
+                deleteIds.value = selected.join(","); // kirim ID array
+            } else {
+                deleteForm.classList.add("hidden");
+                deleteIds.value = "";
+            }
+        });
+    });
+});
+</script>
+
+
 </html>

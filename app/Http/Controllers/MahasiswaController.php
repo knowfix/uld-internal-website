@@ -107,5 +107,58 @@ class MahasiswaController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        return view('mahasiswa.edit', compact('mahasiswa'));
+    }
+    public function update(Request $request, $id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:20|unique:mahasiswas,nim,' . $id, // nim boleh sama asal milik dirinya
+            'surat_keterangan' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+        ]);
+
+        $data = $request->all();
+
+        // Jika ada file baru diupload
+        if ($request->hasFile('surat_keterangan')) {
+            // Hapus file lama jika ada
+            if ($mahasiswa->surat_keterangan && Storage::exists('private/surat_keterangan/' . $mahasiswa->surat_keterangan)) {
+                Storage::delete('private/surat_keterangan/' . $mahasiswa->surat_keterangan);
+            }
+
+            $file = $request->file('surat_keterangan');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('private/surat_keterangan', $filename);
+            $data['surat_keterangan'] = $filename;
+        } else {
+            unset($data['surat_keterangan']); // jangan timpa kalau kosong
+        }
+
+        // Update mahasiswa
+        $mahasiswa->update($data);
+
+        // === Regenerate PDF (opsional) ===
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('mahasiswa.pdf', compact('mahasiswa'));
+        $pdfFilename = 'mahasiswa_' . preg_replace('/[\/\\\\]/', '-', $mahasiswa->nim) . '.pdf';
+        $pdfPath = 'private/pdf_mahasiswa/' . $pdfFilename;
+
+        Storage::put($pdfPath, $pdf->output());
+        $mahasiswa->update(['pdf_path' => $pdfPath]);
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil diperbarui!');
+    }
+    public function bulkDelete(Request $request)
+    {
+        $ids = explode(",", $request->ids);
+
+        Mahasiswa::whereIn('id', $ids)->delete();
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil dihapus.');
+    }
 
 }

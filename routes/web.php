@@ -34,3 +34,11 @@ Route::get('/mahasiswa/{id}/pdf', [MahasiswaController::class, 'generatePdf'])
 Route::get('/mahasiswa/{id}/pdf/download', [MahasiswaController::class, 'downloadPdf'])
     // ->middleware('auth') // opsional, biar aman hanya user login
     ->name('mahasiswa.downloadPdf');
+
+// Form edit
+Route::get('/mahasiswa/{id}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
+
+// Proses update and delete
+Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
+Route::delete('/mahasiswa/bulk-delete', [MahasiswaController::class, 'bulkDelete'])
+    ->name('mahasiswa.bulkDelete');
