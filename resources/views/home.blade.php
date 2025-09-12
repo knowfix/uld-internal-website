@@ -11,28 +11,51 @@
         <div class="bg-[#083D62] h-18 flex items-center px-5">
             <img src="{{ asset('images/newlogo.png') }}" alt="">
         </div>
-        <div class="flex items-center justify-between bg-white p-3 rounded-lg shadow">
-            <!-- Kiri: Icon + Nama -->
-            <div class="flex items-center space-x-3">
-                <!-- Icon user -->
-                <div class="w-10 h-10 bg-[#083D62] text-white flex items-center justify-center rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5.121 17.804A9 9 0 1118.364 4.56M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+        <!-- Wrapper -->
+        <div class="relative">
+            <!-- Button -->
+            <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow cursor-pointer"
+                onclick="toggleUserMenu()">
+                <!-- Avatar + Nama -->
+                <div class="flex items-center space-x-3">
+                    <!-- Avatar -->
+                    <div class="w-10 h-10 bg-[#083D62] text-white flex items-center justify-center rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5.121 17.804A9 9 0 1118.364 4.56M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <!-- Nama + Role -->
+                    <div>
+                        <p class="text-[#083D62] font-semibold">{{ Auth::user()->name }}</p>
+                        <p class="text-gray-500 text-sm">{{ Auth::user()->role ?? 'User' }}</p>
+                    </div>
                 </div>
 
-                <!-- Nama + Role -->
-                <div>
-                    <p class="text-[#083D62] font-semibold">Admin1 ULD</p>
-                    <p class="text-gray-500 text-sm">Administrator</p>
+                <!-- Panah -->
+                <div class="text-[#083D62]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200"
+                        id="arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5l7 7-7 7" />
+                    </svg>
                 </div>
             </div>
 
-            <!-- Panah kanan -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#083D62]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+            <!-- Dropdown -->
+            <!-- Dropdown -->
+            <div id="user-menu"
+                class="hidden absolute left-0 mt-2 w-full bg-white rounded-lg shadow-lg z-50">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Logout
+                    </button>
+                </form>
+            </div>
+
         </div>
         
         <nav class="space-y-4">
@@ -229,5 +252,9 @@
             scales: { x: { stacked: true }, y: { stacked: true } }
         }
     });
+function toggleUserMenu() {
+    const menu = document.getElementById('user-menu');
+    menu.classList.toggle('hidden');
+}
 </script>
 </html>
