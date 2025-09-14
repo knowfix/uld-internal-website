@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');  
 Route::post('/', [LoginController::class, 'login']);  
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', function () {
-        return view('home');
-    })->name('dashboard');
+    Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
+
     
     Route::get('/data-mahasiswa', function () {
         return view('data-mahasiswa');
@@ -45,5 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
     Route::delete('/mahasiswa/bulk-delete', [MahasiswaController::class, 'bulkDelete'])
         ->name('mahasiswa.bulkDelete');
+    
+    Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show'])->name('mahasiswa.show');
+
 });
 

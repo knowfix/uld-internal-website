@@ -124,8 +124,10 @@
             <span class="font-medium text-2xl">Data Mahasiswa</span>
         </div>
 
-        <div class="flex-1 overflow-y-auto bg-gray-100">
-            <div class="p-6 bg-white rounded-xl shadow">
+        <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
+            {{-- <div class="flex-1 overflow-y-auto bg-gray-100"> --}}
+            {{-- <div class="p-6 bg-white rounded-xl shadow"> --}}
+            <div class="max-w-5xl mx-auto bg-white rounded-xl shadow p-6">
                 <form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -134,7 +136,7 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-semibold mb-4 text-[#083D62]">Edit Data Mahasiswa</h2>
                         <a href="{{ route('mahasiswa.index') }}" 
-                        class="flex items-center space-x-1 text-[#ffffff] hover:text-[#174A6F] cursor-pointer bg-[#78a6ba] p-2 rounded w-26">
+                        class="flex items-center space-x-1 text-gray-700 cursor-pointer  bg-gray-200 hover:bg-gray-300 p-2 rounded w-26">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />

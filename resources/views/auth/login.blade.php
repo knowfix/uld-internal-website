@@ -15,6 +15,14 @@
                 <img src="{{ asset('images/logoBaru.png') }}" alt="Logo" class="mx-auto h-16">
             </div>
             <h2 class="text-2xl font-bold text-center text-[#083D62] mb-6">Login</h2>
+            {{-- Pesan error login --}}
+            @if ($errors->any())
+                <div class="mb-4">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2">
+                        {{ $errors->first() }}
+                    </div>
+                </div>
+            @endif
 
             <div class="mb-4">
                 <input id="email" type="email" name="email"

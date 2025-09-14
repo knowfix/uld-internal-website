@@ -5,7 +5,7 @@
     <title>Dashboard | Mahasiswa Disabilitas</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 flex min-h-screen">
+<body class="bg-gray-100 flex h-screen">
     <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-lg flex flex-col">
         <div class="bg-[#083D62] h-18 flex items-center px-5">
@@ -44,7 +44,6 @@
             </div>
 
             <!-- Dropdown -->
-            <!-- Dropdown -->
             <div id="user-menu"
                 class="hidden absolute left-0 mt-2 w-full bg-white rounded-lg shadow-lg z-50">
                 <form method="POST" action="{{ route('logout') }}">
@@ -55,37 +54,36 @@
                     </button>
                 </form>
             </div>
-
         </div>
         
         <nav class="space-y-4">
             <a href="{{ route('dashboard') }}">
-                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 mt-4 mb-2">
-                    <!-- Home Simple -->
+                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
+                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 mt-4 mb-2
+                            hover:bg-[#517289] hover:text-white transition duration-200">
+                    
+                    <!-- Graduation Cap -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" 
                             d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                     <polyline points="9 22 9 12 15 12 15 22"/>
                     </svg>
-        
+
                     <!-- Teks -->
                     <span class="font-medium">Dashboard</span>
                 </div>
             </a>
             <a href="{{ route('mahasiswa.index') }}">
-                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
-                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2 
-                            hover:bg-[#517289] hover:text-white transition duration-200">
-                    
-                    <!-- Graduation Cap -->
+                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
+                    <!-- Home Simple -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <ellipse cx="12" cy="5" rx="9" ry="3"/>
                     <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
                     <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
                     </svg>
-
+        
                     <!-- Teks -->
                     <span class="font-medium">Data Mahasiswa</span>
                 </div>
@@ -144,129 +142,81 @@
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Dashboard</span>
+            <span class="font-medium text-2xl">Data Mahasiswa</span>
         </div>
-        <!-- Section Statistik -->
-        <section class="relative bg-cover bg-center h-64 flex items-center justify-center"
-            style="background-image: url('{{ asset('images/fotoKantorULD.jpg') }}');">
-            <!-- Overlay gelap -->
-            <div class="absolute inset-0 bg-[#0a2d44]/80"></div>
 
-            <!-- Konten -->
-            <div class="relative text-center text-white px-6">
-                <h1 class="text-2xl md:text-3xl font-bold">DATA MAHASISWA DISABILITAS UGM</h1>
-                <p class="mt-2 text-sm md:text-base">
-                    Menyediakan dukungan layanan terbaik bagi mahasiswa disabilitas untuk mendukung proses belajar yang inklusif dan setara
-                </p>
+        <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
+            <div class="max-w-5xl mx-auto bg-white rounded-xl shadow p-6">
+                
+                {{-- Tombol kembali --}}
+                <div class="mb-4">
+                    <a href="{{ route('mahasiswa.index') }}" 
+                    class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
+                        ← Kembali
+                    </a>
+                </div>
 
-                <!-- Statistik -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-6">
+                {{-- Judul --}}
+                <h2 class="text-2xl font-bold text-blue-700 mb-6 border-b pb-2">Profil</h2>
+
+                {{-- Data Utama --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <p class="font-semibold">Mahasiswa Terdata</p>
-                        <h2 class="text-3xl font-bold">{{ $totalMahasiswa }}</h2>
+                        <p><span class="text-lg font-semibold text-gray-800">Nama Lengkap:</span><br>{{ $mahasiswa->nama }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Jenis Kelamin:</span><br>{{ $mahasiswa->jenis_kelamin }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Tanggal Lahir:</span><br>{{ $mahasiswa->tanggal_lahir }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Pendidikan:</span><br>{{ $mahasiswa->pendidikan }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Angkatan:</span><br>{{ $mahasiswa->angkatan }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Fakultas:</span><br>{{ $mahasiswa->fakultas }}</p>
+                        <p class="mt-3">
+                            <span class="text-lg font-semibold text-gray-800">Surat Keterangan Disabilitas:</span><br>
+                            <a href="{{ $mahasiswa->surat_keterangan_link }}" 
+                            target="_blank" 
+                            class="text-blue-600 hover:underline">
+                                {{ $mahasiswa->surat_keterangan_link }}
+                            </a>
+                        </p>                    
                     </div>
                     <div>
-                        <p class="font-semibold">Jenis Disabilitas</p>
-                        <h2 class="text-3xl font-bold">{{ $totalJenis }}</h2>
+                        <p><span class="text-lg font-semibold text-gray-800">Program Studi:</span><br>{{ $mahasiswa->prodi }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Nomor Induk Mahasiswa:</span><br>{{ $mahasiswa->nim }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Nomor Telepon:</span><br>{{ $mahasiswa->nomor_hp }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Beasiswa:</span><br>{{ $mahasiswa->beasiswa }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Ragam Disabilitas:</span><br>{{ $mahasiswa->ragam_disabilitas }}</p>
                     </div>
+                </div>
+
+                {{-- Detail Tambahan --}}
+                <div class="space-y-6">
                     <div>
-                        <p class="font-semibold">Sebaran Fakultas</p>
-                        <h2 class="text-3xl font-bold">{{ $totalFakultas }}</h2>
+                        <h3 class="text-lg font-semibold text-gray-800">Detail Disabilitas</h3>
+                        <p class="text-gray-600">{{ $mahasiswa->detail_disabilitas }}</p>
                     </div>
+
                     <div>
-                        <p class="font-semibold">Jumlah Lulusan</p>
-                        <h2 class="text-3xl font-bold">{{ $totalLulusan }}</h2>
+                        <h3 class="text-lg font-semibold text-gray-800">Alat Bantu</h3>
+                        <p class="text-gray-600">{{ $mahasiswa->alat_bantu }}</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Kesulitan/Kendala saat proses belajar</h3>
+                        <p class="text-gray-600">{{ $mahasiswa->kendala }}</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Akomodasi yang diperlukan</h3>
+                        <p class="text-gray-600">{{ $mahasiswa->akomodasi }}</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Pendampingan/Layanan</h3>
+                        <p class="text-gray-600">{{ $mahasiswa->pendampingan }}</p>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Charts -->
-        <div class="grid grid-cols-2 gap-4 p-6">
-            <div class="bg-white rounded-xl shadow p-4">
-                <h3 class="font-semibold mb-2">Sebaran Mahasiswa di Fakultas</h3>
-                <canvas id="chartFakultas"></canvas>
-            </div>
-            <div class="bg-white rounded-xl shadow p-4">
-                <h3 class="font-semibold mb-2">Jumlah Mahasiswa Disabilitas per Tahun</h3>
-                <canvas id="chartTahun"></canvas>
-            </div>
-            <div class="bg-white rounded-xl shadow p-4">
-                <h3 class="font-semibold mb-2">Ragam Disabilitas</h3>
-                <canvas id="chartPie"></canvas>
-            </div>
-            <div class="bg-white rounded-xl shadow p-4">
-                <h3 class="font-semibold mb-2">Jumlah Mahasiswa Disabilitas per Jenis per Tahun</h3>
-                <canvas id="chartStacked"></canvas>
-            </div>
         </div>
-            
 
     </main>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // Chart 1: Bar
-    new Chart(document.getElementById('chartFakultas'), {
-        type: 'bar',
-        data: {
-            labels: ['Fisipol', 'Ekonomi', 'Kedokteran', 'Teknik', 'MIPA'],
-            datasets: [{
-                label: 'Jumlah',
-                data: [5, 4, 3, 2, 1],
-                backgroundColor: 'rgb(30, 64, 175)',
-            }]
-        }
-    });
 
-    // Chart 2: Line
-    new Chart(document.getElementById('chartTahun'), {
-        type: 'line',
-        data: {
-            labels: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
-            datasets: [{
-                label: 'Jumlah Mahasiswa',
-                data: [1, 2, 5, 6, 7, 10, 20],
-                borderColor: 'rgb(37, 99, 235)',
-                fill: false
-            }]
-        }
-    });
-
-    // Chart 3: Pie
-    new Chart(document.getElementById('chartPie'), {
-        type: 'pie',
-        data: {
-            labels: ['Fisik', 'Sensorik', 'Mental', 'Ganda', 'Lainnya'],
-            datasets: [{
-                data: [10, 8, 5, 3, 2],
-                backgroundColor: ['#f87171','#60a5fa','#34d399','#a78bfa','#facc15'],
-            }]
-        }
-    });
-
-    // Chart 4: Stacked Bar
-    new Chart(document.getElementById('chartStacked'), {
-        type: 'bar',
-        data: {
-            labels: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
-            datasets: [
-                { label: 'Fisik', data: [1,1,2,2,3,5,10], backgroundColor: '#f87171' },
-                { label: 'Sensorik', data: [0,1,1,2,2,3,5], backgroundColor: '#60a5fa' },
-                { label: 'Mental', data: [0,0,1,1,2,2,3], backgroundColor: '#34d399' },
-                { label: 'Ganda', data: [0,0,0,1,1,2,2], backgroundColor: '#a78bfa' },
-                { label: 'Lainnya', data: [0,0,0,0,1,1,1], backgroundColor: '#facc15' }
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: { legend: { position: 'top' } },
-            scales: { x: { stacked: true }, y: { stacked: true } }
-        }
-    });
-function toggleUserMenu() {
-    const menu = document.getElementById('user-menu');
-    menu.classList.toggle('hidden');
-}
-</script>
 </html>

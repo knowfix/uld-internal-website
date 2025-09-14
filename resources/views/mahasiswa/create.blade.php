@@ -11,28 +11,49 @@
         <div class="bg-[#083D62] h-18 flex items-center px-5">
             <img src="{{ asset('images/newlogo.png') }}" alt="">
         </div>
-        <div class="flex items-center justify-between bg-white p-3 rounded-lg shadow">
-            <!-- Kiri: Icon + Nama -->
-            <div class="flex items-center space-x-3">
-                <!-- Icon user -->
-                <div class="w-10 h-10 bg-[#083D62] text-white flex items-center justify-center rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5.121 17.804A9 9 0 1118.364 4.56M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+        <!-- Wrapper -->
+        <div class="relative">
+            <!-- Button -->
+            <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow cursor-pointer"
+                onclick="toggleUserMenu()">
+                <!-- Avatar + Nama -->
+                <div class="flex items-center space-x-3">
+                    <!-- Avatar -->
+                    <div class="w-10 h-10 bg-[#083D62] text-white flex items-center justify-center rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5.121 17.804A9 9 0 1118.364 4.56M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <!-- Nama + Role -->
+                    <div>
+                        <p class="text-[#083D62] font-semibold">{{ Auth::user()->name }}</p>
+                        <p class="text-gray-500 text-sm">{{ Auth::user()->role ?? 'User' }}</p>
+                    </div>
                 </div>
 
-                <!-- Nama + Role -->
-                <div>
-                    <p class="text-[#083D62] font-semibold">Admin1 ULD</p>
-                    <p class="text-gray-500 text-sm">Administrator</p>
+                <!-- Panah -->
+                <div class="text-[#083D62]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200"
+                        id="arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5l7 7-7 7" />
+                    </svg>
                 </div>
             </div>
 
-            <!-- Panah kanan -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#083D62]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+            <!-- Dropdown -->
+            <div id="user-menu"
+                class="hidden absolute left-0 mt-2 w-full bg-white rounded-lg shadow-lg z-50">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="block w-full text-center px-4 py-2 text-sm text-red-600 hover:bg-red-600 hover:text-white hover:rounded-lg">
+                        Logout
+                    </button>
+                </form>
+            </div>
         </div>
         
         <nav class="space-y-4">
@@ -124,8 +145,9 @@
             <span class="font-medium text-2xl">Data Mahasiswa</span>
         </div>
 
-        <div class="flex-1 overflow-y-auto bg-gray-100">
-            <div class="p-6 bg-white rounded-xl shadow">
+        <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
+            <div class="max-w-5xl mx-auto bg-white rounded-xl shadow p-6">
+            {{-- <div class="p-6 bg-white rounded-xl shadow"> --}}
                 <form action="{{ route('mahasiswa.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
@@ -133,14 +155,14 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-semibold mb-4 text-[#083D62]">Identitas Utama</h2>
                         <a href="{{ route('mahasiswa.index') }}" 
-                        class="flex items-center space-x-1 text-[#ffffff] hover:text-[#174A6F] cursor-pointer bg-[#78a6ba] p-2 rounded w-26">
+                        class="flex items-center space-x-1 text-gray-700 cursor-pointer  bg-gray-200 hover:bg-gray-300 p-2 rounded w-26">
                             <!-- Icon panah -->
                             <svg xmlns="http://www.w3.org/2000/svg" 
                                 class="h-5 w-5" fill="none" 
                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                             </svg>
-                            <span class="font-medium">Kembali</span>
+                            <span class="font-medium  ">Kembali</span>
                         </a>
 
                     </div>
@@ -265,4 +287,44 @@
 
     </main>
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const checkboxes = document.querySelectorAll(".select-mahasiswa");
+    const editBtn = document.getElementById("edit-btn");
+    const deleteForm = document.getElementById("delete-form");
+    const deleteIds = document.getElementById("delete-ids");
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener("change", function () {
+            let selected = [];
+            document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
+                selected.push(el.value);
+            });
+
+            // Toggle Edit (hanya 1 terpilih)
+            if (selected.length === 1) {
+                editBtn.classList.remove("hidden");
+                editBtn.href = "/mahasiswa/" + selected[0] + "/edit";
+            } else {
+                editBtn.classList.add("hidden");
+                editBtn.href = "#";
+            }
+
+            // Toggle Delete (boleh >0)
+            if (selected.length > 0) {
+                deleteForm.classList.remove("hidden");
+                deleteIds.value = selected.join(","); // kirim ID array
+            } else {
+                deleteForm.classList.add("hidden");
+                deleteIds.value = "";
+            }
+        });
+    });
+});
+function toggleUserMenu() {
+    const menu = document.getElementById('user-menu');
+    menu.classList.toggle('hidden');
+}
+</script>
+
 </html>

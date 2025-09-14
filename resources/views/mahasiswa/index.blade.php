@@ -49,7 +49,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        class="block w-full text-center px-4 py-2 text-sm text-red-600 hover:bg-red-600 hover:text-white hover:rounded-lg">
                         Logout
                     </button>
                 </form>
@@ -162,7 +162,9 @@
                 <div class="flex items-center space-x-6 text-[#1F4E79] font-medium">
                     <!-- Tombol Edit Data (hidden awalnya) -->
                     <a id="edit-btn" href="#"
-                    class="hidden flex items-center space-x-2 text-green-800 font-medium cursor-pointer">
+                    class="hidden flex items-center space-x-2 text-green-800 font-medium cursor-pointer 
+                            border border-green-800 rounded-lg px-3 py-2
+                            hover:bg-green-800 hover:text-white transition-colors duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" 
@@ -170,13 +172,15 @@
                         </svg>
                         <span>Edit Data</span>
                     </a>
-                    <!-- Tombol Hapus Data (hidden default) -->
+
                     <form id="delete-form" action="{{ route('mahasiswa.bulkDelete') }}" method="POST" class="hidden">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="ids" id="delete-ids">
                         <button type="submit" 
-                            class="flex items-center space-x-2 text-red-600 font-medium cursor-pointer">
+                            class="flex items-center space-x-2 text-red-600 font-medium cursor-pointer
+                                border border-red-600 rounded-lg px-3 py-2
+                                hover:bg-red-600 hover:text-white transition-colors duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" 
@@ -185,15 +189,20 @@
                             <span>Hapus Data</span>
                         </button>
                     </form>
+
                     <a href="{{ route('mahasiswa.create') }}" 
-                    class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer">
+                    class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
+                            border border-[#174A6F] rounded-lg px-3 py-2 
+                            hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                         </svg>
                         <span>Tambah Data</span>
                     </a>
-                    <button class="flex items-center space-x-1 hover:text-[#163a5c]">
+                    <button  class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
+                            border border-[#174A6F] rounded-lg px-3 py-2 
+                            hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
                             viewBox="0 0 24 24" stroke="currentColor">
                             <!-- Icon download -->
@@ -202,7 +211,9 @@
                         </svg>
                         <span>Export File</span>
                     </button>
-                    <button class="flex items-center space-x-1 hover:text-[#163a5c]">
+                    <button  class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
+                            border border-[#174A6F] rounded-lg px-3 py-2 
+                            hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" 
@@ -222,7 +233,10 @@
                 <table class="w-full border">
                     <thead>
                         <tr class="bg-gray-200">
-                            <th class="p-2 border"></th>
+                            <th class="p-2 border text-center">
+                                <input type="checkbox" id="select-all">
+                            </th>
+                            {{-- <th class="p-2 border"></th> --}}
                             <th class="p-2 border">Nama</th>
                             <th class="p-2 border">Fakultas</th>
                             <th class="p-2 border">Pendidikan</th>
@@ -243,7 +257,7 @@
                             <td class="p-2 border">{{ $mhs->pendidikan }}</td>
                             <td class="p-2 border">{{ $mhs->angkatan }}</td>
                             <td class="p-2 border">{{ $mhs->ragam_disabilitas }}</td>
-                            <td class="p-2 border">
+                            <td class="p-2 border text-center">
                                 <a href="{{ route('mahasiswa.pdf', $mhs->id) }}" 
                                     class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
                                     Download PDF
@@ -258,7 +272,21 @@
                                 <span class="text-gray-400">Tidak ada file</span>
                                 @endif
                             </td> --}}
-                            <td class="text-center border">Aksi</td>
+                            <td class="p-2 border text-center">
+                                <a href="{{ route('mahasiswa.show', $mhs->id) }}" 
+                                class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                        class="h-4 w-4 mr-1" 
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    Detail
+                                </a>
+                            </td>
+
                         </tr>
                         @endforeach
                     </tbody>
@@ -269,14 +297,14 @@
     </main>
 </body>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const checkboxes = document.querySelectorAll(".select-mahasiswa");
-    const editBtn = document.getElementById("edit-btn");
-    const deleteForm = document.getElementById("delete-form");
-    const deleteIds = document.getElementById("delete-ids");
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectAll = document.getElementById("select-all"); // header checkbox
+        const checkboxes = document.querySelectorAll(".select-mahasiswa");
+        const editBtn = document.getElementById("edit-btn");
+        const deleteForm = document.getElementById("delete-form");
+        const deleteIds = document.getElementById("delete-ids");
 
-    checkboxes.forEach(cb => {
-        cb.addEventListener("change", function () {
+        function updateSelection() {
             let selected = [];
             document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
                 selected.push(el.value);
@@ -299,14 +327,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 deleteForm.classList.add("hidden");
                 deleteIds.value = "";
             }
-        });
-    });
-});
-function toggleUserMenu() {
-    const menu = document.getElementById('user-menu');
-    menu.classList.toggle('hidden');
-}
-</script>
+        }
 
+        // Checkbox tiap baris
+        checkboxes.forEach(cb => {
+            cb.addEventListener("change", updateSelection);
+        });
+
+        // Checkbox "select all"
+        if (selectAll) {
+            selectAll.addEventListener("change", function () {
+                checkboxes.forEach(cb => cb.checked = this.checked);
+                updateSelection();
+            });
+        }
+    });
+    function toggleUserMenu() {
+        const menu = document.getElementById('user-menu');
+        menu.classList.toggle('hidden');
+    }
+</script>
 
 </html>
