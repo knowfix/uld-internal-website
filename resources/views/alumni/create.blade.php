@@ -142,7 +142,7 @@
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Data Mahasiswa</span>
+            <span class="font-medium text-2xl">Data Alumni</span>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
@@ -304,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Toggle Edit (hanya 1 terpilih)
             if (selected.length === 1) {
                 editBtn.classList.remove("hidden");
-                editBtn.href = "/mahasiswa/" + selected[0] + "/edit";
+                editBtn.href = "/alumni/" + selected[0] + "/edit";
             } else {
                 editBtn.classList.add("hidden");
                 editBtn.href = "#";

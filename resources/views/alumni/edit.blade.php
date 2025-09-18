@@ -121,7 +121,7 @@
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Data Mahasiswa</span>
+            <span class="font-medium text-2xl">Data Alumni</span>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
@@ -134,7 +134,7 @@
 
                     <!-- 1. Identitas Utama -->
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-2xl font-semibold mb-4 text-[#083D62]">Edit Data Mahasiswa</h2>
+                        <h2 class="text-2xl font-semibold mb-4 text-[#083D62]">Edit Data Alumni</h2>
                         <a href="{{ route('alumni.index') }}" 
                         class="flex items-center space-x-1 text-gray-700 cursor-pointer  bg-gray-200 hover:bg-gray-300 p-2 rounded w-26">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 

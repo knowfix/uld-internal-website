@@ -143,7 +143,7 @@
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Data Mahasiswa</span>
+            <span class="font-medium text-2xl">Data Alumni</span>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
