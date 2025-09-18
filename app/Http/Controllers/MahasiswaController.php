@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumni;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -166,6 +167,18 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::findOrFail($id);
         return view('mahasiswa.show', compact('mahasiswa'));
     }
+    public function jadikanAlumni(Request $request)
+    {
+        $ids = explode(',', $request->ids);
 
+        $mahasiswas = Mahasiswa::whereIn('id', $ids)->get();
 
+        foreach ($mahasiswas as $mhs) {
+            Alumni::create($mhs->toArray()); // salin ke alumni
+            $mhs->delete(); // hapus dari mahasiswa
+        }
+
+        return redirect()->route('alumni.index')
+            ->with('success', 'Mahasiswa berhasil dipindah ke data alumni.');
+    }
 }

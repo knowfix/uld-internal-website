@@ -41,6 +41,7 @@
                             d="M9 5l7 7-7 7" />
                     </svg>
                 </div>
+                
             </div>
 
             <!-- Dropdown -->
@@ -75,34 +76,34 @@
                 </div>
             </a>
             <a href="{{ route('mahasiswa.index') }}">
-                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
-                    <!-- Home Simple -->
+                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
+                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 mb-2
+                            hover:bg-[#517289] hover:text-white transition duration-200">
+                    
+                    <!-- Graduation Cap -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <ellipse cx="12" cy="5" rx="9" ry="3"/>
                     <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
                     <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
                     </svg>
-        
+
                     <!-- Teks -->
                     <span class="font-medium">Data Mahasiswa</span>
                 </div>
             </a>
-            <a href="#">
-                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
-                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
-                            hover:bg-[#517289] hover:text-white transition duration-200">
-                    
-                    <!-- Graduation Cap -->
+            <a href="{{ route('alumni.index') }}">
+                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
+                    <!-- Graduation -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" 
                         stroke="currentColor" stroke-width="2">
                         <path d="M22 10l-10-5L2 10l10 5 10-5z" 
-                            class="stroke-[#757575] group-hover:stroke-white"/>
+                            class=" group-hover:stroke-white"/>
                         <path d="M6 12v5c3 3 9 3 12 0v-5" 
-                            class="stroke-[#757575] group-hover:stroke-white"/>
+                            class=" group-hover:stroke-white"/>
                     </svg>
-
+        
                     <!-- Teks -->
                     <span class="font-medium">Data Alumni</span>
                 </div>
@@ -150,7 +151,7 @@
                 
                 {{-- Tombol kembali --}}
                 <div class="mb-4">
-                    <a href="{{ route('mahasiswa.index') }}" 
+                    <a href="{{ route('alumni.index') }}" 
                     class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
                         ← Kembali
                     </a>
@@ -162,27 +163,27 @@
                 {{-- Data Utama --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <p><span class="text-lg font-semibold text-gray-800">Nama Lengkap:</span><br>{{ $mahasiswa->nama }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Jenis Kelamin:</span><br>{{ $mahasiswa->jenis_kelamin }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Tanggal Lahir:</span><br>{{ $mahasiswa->tanggal_lahir }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Pendidikan:</span><br>{{ $mahasiswa->pendidikan }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Angkatan:</span><br>{{ $mahasiswa->angkatan }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Fakultas:</span><br>{{ $mahasiswa->fakultas }}</p>
+                        <p><span class="text-lg font-semibold text-gray-800">Nama Lengkap:</span><br>{{ $alumni->nama }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Jenis Kelamin:</span><br>{{ $alumni->jenis_kelamin }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Tanggal Lahir:</span><br>{{ $alumni->tanggal_lahir }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Pendidikan:</span><br>{{ $alumni->pendidikan }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Angkatan:</span><br>{{ $alumni->angkatan }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-800">Fakultas:</span><br>{{ $alumni->fakultas }}</p>
                         <p class="mt-3">
                             <span class="text-lg font-semibold text-gray-800">Surat Keterangan Disabilitas:</span><br>
-                            <a href="{{ $mahasiswa->surat_keterangan_link }}" 
+                            <a href="{{ $alumni->surat_keterangan_link }}" 
                             target="_blank" 
                             class="text-blue-600 hover:underline">
-                                {{ $mahasiswa->surat_keterangan_link }}
+                                {{ $alumni->surat_keterangan_link }}
                             </a>
                         </p>                    
                     </div>
                     <div>
-                        <p><span class="text-lg font-semibold text-gray-800">Program Studi:</span><br>{{ $mahasiswa->prodi }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Nomor Induk Mahasiswa:</span><br>{{ $mahasiswa->nim }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Nomor Telepon:</span><br>{{ $mahasiswa->nomor_hp }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Beasiswa:</span><br>{{ $mahasiswa->beasiswa }}</p>
-                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Ragam Disabilitas:</span><br>{{ $mahasiswa->ragam_disabilitas }}</p>
+                        <p><span class="text-lg font-semibold text-gray-800">Program Studi:</span><br>{{ $alumni->prodi }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Nomor Induk alumni:</span><br>{{ $alumni->nim }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Nomor Telepon:</span><br>{{ $alumni->nomor_hp }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Beasiswa:</span><br>{{ $alumni->beasiswa }}</p>
+                        <p class="mt-3"><span class="text-lg font-semibold text-gray-700">Ragam Disabilitas:</span><br>{{ $alumni->ragam_disabilitas }}</p>
                     </div>
                 </div>
 
@@ -190,27 +191,27 @@
                 <div class="space-y-6">
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800">Detail Disabilitas</h3>
-                        <p class="text-gray-600">{{ $mahasiswa->detail_disabilitas }}</p>
+                        <p class="text-gray-600">{{ $alumni->detail_disabilitas }}</p>
                     </div>
 
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800">Alat Bantu</h3>
-                        <p class="text-gray-600">{{ $mahasiswa->alat_bantu }}</p>
+                        <p class="text-gray-600">{{ $alumni->alat_bantu }}</p>
                     </div>
 
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800">Kesulitan/Kendala saat proses belajar</h3>
-                        <p class="text-gray-600">{{ $mahasiswa->kendala }}</p>
+                        <p class="text-gray-600">{{ $alumni->kendala }}</p>
                     </div>
 
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800">Akomodasi yang diperlukan</h3>
-                        <p class="text-gray-600">{{ $mahasiswa->akomodasi }}</p>
+                        <p class="text-gray-600">{{ $alumni->akomodasi }}</p>
                     </div>
 
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800">Pendampingan/Layanan</h3>
-                        <p class="text-gray-600">{{ $mahasiswa->pendampingan }}</p>
+                        <p class="text-gray-600">{{ $alumni->pendampingan }}</p>
                     </div>
                 </div>
             </div>
@@ -224,4 +225,5 @@
         menu.classList.toggle('hidden');
     }
 </script>
+
 </html>

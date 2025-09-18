@@ -75,34 +75,34 @@
                 </div>
             </a>
             <a href="{{ route('mahasiswa.index') }}">
-                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
-                    <!-- Home Simple -->
+                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
+                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 mb-2
+                            hover:bg-[#517289] hover:text-white transition duration-200">
+                    
+                    <!-- Graduation Cap -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <ellipse cx="12" cy="5" rx="9" ry="3"/>
                     <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
                     <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
                     </svg>
-        
+
                     <!-- Teks -->
                     <span class="font-medium">Data Mahasiswa</span>
                 </div>
             </a>
             <a href="{{ route('alumni.index') }}">
-                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
-                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
-                            hover:bg-[#517289] hover:text-white transition duration-200">
-                    
-                    <!-- Graduation Cap -->
+                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
+                    <!-- Graduation -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" 
                         stroke="currentColor" stroke-width="2">
                         <path d="M22 10l-10-5L2 10l10 5 10-5z" 
-                            class="stroke-[#757575] group-hover:stroke-white"/>
+                            class=" group-hover:stroke-white"/>
                         <path d="M6 12v5c3 3 9 3 12 0v-5" 
-                            class="stroke-[#757575] group-hover:stroke-white"/>
+                            class=" group-hover:stroke-white"/>
                     </svg>
-
+        
                     <!-- Teks -->
                     <span class="font-medium">Data Alumni</span>
                 </div>
@@ -135,14 +135,16 @@
         <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
             <!-- Home Simple -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                    <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
-                    <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
+                        fill="none" viewBox="0 0 24 24" 
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M22 10l-10-5L2 10l10 5 10-5z" 
+                            class=" group-hover:stroke-white"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5" 
+                            class=" group-hover:stroke-white"/>
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Data Mahasiswa</span>
+            <span class="font-medium text-2xl">Data Alumni</span>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100">
@@ -173,7 +175,7 @@
                         <span>Edit Data</span>
                     </a>
 
-                    <form id="delete-form" action="{{ route('mahasiswa.bulkDelete') }}" method="POST" class="hidden">
+                    <form id="delete-form" action="{{ route('alumni.bulkDelete') }}" method="POST" class="hidden">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="ids" id="delete-ids">
@@ -189,19 +191,8 @@
                             <span>Hapus Data</span>
                         </button>
                     </form>
-                    <form id="alumni-form" action="{{ route('mahasiswa.jadikanAlumni') }}" method="POST" class="hidden">
-                        @csrf
-                        <input type="hidden" id="alumni-ids" name="ids">
-                        <button type="submit" 
-                            class="flex items-center space-x-2 text-purple-600 font-medium cursor-pointer
-                                border border-purple-600 rounded-lg px-3 py-2
-                                hover:bg-purple-700 hover:text-white transition-colors duration-200">
-                            Pindah Alumni
-                        </button>
-                    </form>
 
-
-                    <a href="{{ route('mahasiswa.create') }}" 
+                    <a href="{{ route('alumni.create') }}" 
                     class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
                             border border-[#174A6F] rounded-lg px-3 py-2 
                             hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
@@ -259,25 +250,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($mahasiswas as $mhs)
+                        @foreach($alumnis as $alumni)
                         <tr>
-                            <td class="p-2 border text-center">
-                                <input type="checkbox" class="select-mahasiswa" value="{{ $mhs->id }}">
+                            <td class="p-2 border">
+                                <input type="checkbox" class="select-mahasiswa" value="{{ $alumni->id }}">
                             </td>
-                            <td class="p-2 border">{{ $mhs->nama }}</td>
-                            <td class="p-2 border">{{ $mhs->fakultas }}</td>
-                            <td class="p-2 border">{{ $mhs->pendidikan }}</td>
-                            <td class="p-2 border">{{ $mhs->angkatan }}</td>
-                            <td class="p-2 border">{{ $mhs->ragam_disabilitas }}</td>
+                            <td class="p-2 border">{{ $alumni->nama }}</td>
+                            <td class="p-2 border">{{ $alumni->fakultas }}</td>
+                            <td class="p-2 border">{{ $alumni->pendidikan }}</td>
+                            <td class="p-2 border">{{ $alumni->angkatan }}</td>
+                            <td class="p-2 border">{{ $alumni->ragam_disabilitas }}</td>
                             <td class="p-2 border text-center">
-                                <a href="{{ route('mahasiswa.pdf', $mhs->id) }}" 
+                                <a href="{{ route('alumni.pdf', $alumni->id) }}" 
                                     class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
                                     Download PDF
                                 </a>
                             </td>
                             {{-- <td class="border text-center">
-                                @if($mhs->surat_keterangan)
-                                <a href="{{ route('mahasiswa.download', $mhs->id) }}" class="text-blue-600 hover:underline">
+                                @if($alumni->surat_keterangan)
+                                <a href="{{ route('mahasiswa.download', $alumni->id) }}" class="text-blue-600 hover:underline">
                                     Download PDF
                                 </a>
                                 @else
@@ -285,7 +276,7 @@
                                 @endif
                             </td> --}}
                             <td class="p-2 border text-center">
-                                <a href="{{ route('mahasiswa.show', $mhs->id) }}" 
+                                <a href="{{ route('alumni.show', $alumni->id) }}" 
                                 class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" 
                                         class="h-4 w-4 mr-1" 
@@ -310,8 +301,6 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const alumniForm = document.getElementById("alumni-form");
-        const alumniIds = document.getElementById("alumni-ids"); //alumni
         const selectAll = document.getElementById("select-all"); // header checkbox
         const checkboxes = document.querySelectorAll(".select-mahasiswa");
         const editBtn = document.getElementById("edit-btn");
@@ -327,7 +316,7 @@
             // Toggle Edit (hanya 1 terpilih)
             if (selected.length === 1) {
                 editBtn.classList.remove("hidden");
-                editBtn.href = "/mahasiswa/" + selected[0] + "/edit";
+                editBtn.href = "/alumni/" + selected[0] + "/edit";
             } else {
                 editBtn.classList.add("hidden");
                 editBtn.href = "#";
@@ -337,13 +326,9 @@
             if (selected.length > 0) {
                 deleteForm.classList.remove("hidden");
                 deleteIds.value = selected.join(","); // kirim ID array
-                alumniForm.classList.remove("hidden");
-                alumniIds.value = selected.join(",");
             } else {
                 deleteForm.classList.add("hidden");
                 deleteIds.value = "";
-                alumniForm.classList.add("hidden");
-                alumniIds.value = "";
             }
         }
 

@@ -90,7 +90,7 @@
                     <span class="font-medium">Data Mahasiswa</span>
                 </div>
             </a>
-            <a href="#">
+            <a href="{{ route('alumni.index') }}">
                 <div class="group flex items-center space-x-3 bg-white text-[#757575] 
                             px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
                             hover:bg-[#517289] hover:text-white transition duration-200">
@@ -175,7 +175,7 @@
                     </div>
                     <div>
                         <p class="font-semibold">Jumlah Lulusan</p>
-                        <h2 class="text-3xl font-bold">{{ $totalLulusan }}</h2>
+                        <h2 class="text-3xl font-bold">{{ $totalAlumni }}</h2>
                     </div>
                 </div>
             </div>
@@ -183,21 +183,21 @@
 
         <!-- Charts -->
         <div class="grid grid-cols-2 gap-4 p-6">
-            <div class="bg-white rounded-xl shadow p-4">
+            <div class="bg-white rounded-xl shadow p-4 h-80 flex flex-col">
                 <h3 class="font-semibold mb-2">Sebaran Mahasiswa di Fakultas</h3>
-                <canvas id="chartFakultas"></canvas>
+                <canvas id="chartFakultas" class="w-full h-full"></canvas>
             </div>
-            <div class="bg-white rounded-xl shadow p-4">
+            <div class="bg-white rounded-xl shadow p-4 h-80  flex flex-col">
                 <h3 class="font-semibold mb-2">Jumlah Mahasiswa Disabilitas per Tahun</h3>
-                <canvas id="chartTahun"></canvas>
+                <canvas id="chartTahun" class="w-full h-full"></canvas>
             </div>
-            <div class="bg-white rounded-xl shadow p-4">
+            <div class="bg-white rounded-xl shadow p-4 h-  flex flex-col">
                 <h3 class="font-semibold mb-2">Ragam Disabilitas</h3>
-                <canvas id="chartPie"></canvas>
+                <canvas id="chartPie" class="w-full h-full"></canvas>
             </div>
-            <div class="bg-white rounded-xl shadow p-4">
+            <div class="bg-white rounded-xl shadow p-4 h-80  flex flex-col">
                 <h3 class="font-semibold mb-2">Jumlah Mahasiswa Disabilitas per Jenis per Tahun</h3>
-                <canvas id="chartStacked"></canvas>
+                <canvas id="chartStacked" class="w-full h-full"></canvas>
             </div>
         </div>
             
@@ -206,67 +206,217 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // Data dari controller (pastikan data sudah dikirimkan)
+    const fakultasLabels = {!! json_encode($dataFakultas->pluck('fakultas')) !!};
+    const jumlahPerFakultas = {!! json_encode($dataFakultas->pluck('jumlah')) !!};
     // Chart 1: Bar
+    // Bar Chart
     new Chart(document.getElementById('chartFakultas'), {
         type: 'bar',
         data: {
-            labels: ['Fisipol', 'Ekonomi', 'Kedokteran', 'Teknik', 'MIPA'],
+            labels: fakultasLabels,
             datasets: [{
-                label: 'Jumlah',
-                data: [5, 4, 3, 2, 1],
-                backgroundColor: 'rgb(30, 64, 175)',
+                label: 'Jumlah Mahasiswa',
+                data: jumlahPerFakultas,
+                backgroundColor: 'rgba(8, 61, 98, 1)',
+                borderRadius: 6
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    bottom: 20, // tambahin jarak bawah biar label tidak mepet
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: false }
+            }
         }
     });
-
     // Chart 2: Line
+    // LINE CHART - Tahun Angkatan
+    const tahunLabels = {!! json_encode($tahunData->pluck('angkatan')) !!};
+    const jumlahPerTahun = {!! json_encode($tahunData->pluck('jumlah')) !!};
     new Chart(document.getElementById('chartTahun'), {
         type: 'line',
         data: {
-            labels: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
+            labels: tahunLabels,
             datasets: [{
-                label: 'Jumlah Mahasiswa',
-                data: [1, 2, 5, 6, 7, 10, 20],
-                borderColor: 'rgb(37, 99, 235)',
-                fill: false
+                label: 'Jumlah Mahasiswa Disabilitas',
+                data: jumlahPerTahun,
+                borderColor: 'rgba(8, 61, 98, 1)',
+                backgroundColor: 'rgba(8, 61, 98, 1)',
+                tension: 0.3,
+                fill: false,
+                pointRadius: 5,
+                pointBackgroundColor: 'rgba(8, 61, 98, 1)',
+                pointHoverRadius: 7
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    bottom: 20, // tambahin jarak bawah biar label tidak mepet
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { precision: 0 }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true, // tampilkan label dataset di atas chart
+                    labels: {
+                        color: '#333',
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(context) {
+                            return `Jumlah mahasiswa disabilitas: ${context.parsed.y}`;
+                        }
+                    }
+                }
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            }
         }
     });
 
     // Chart 3: Pie
+    const pieLabels = {!! json_encode($disabilitasData->pluck('ragam_disabilitas')) !!};
+    const pieData = {!! json_encode($disabilitasData->pluck('jumlah')) !!};
     new Chart(document.getElementById('chartPie'), {
         type: 'pie',
         data: {
-            labels: ['Fisik', 'Sensorik', 'Mental', 'Ganda', 'Lainnya'],
+            labels: pieLabels,
             datasets: [{
-                data: [10, 8, 5, 3, 2],
-                backgroundColor: ['#f87171','#60a5fa','#34d399','#a78bfa','#facc15'],
+                label: 'Jumlah Mahasiswa',
+                data: pieData,
+                backgroundColor: [
+                    '#ff6384', '#36a2eb', '#ffce56',
+                    '#4bc0c0', '#9966ff', '#ff9f40',
+                    '#c9cbcf', '#00aaff', '#ff6b6b'
+                ],
+                borderWidth: 1
             }]
+        },
+        options: {
+            responsive: true,
+            layout: {
+                padding: {
+                    bottom: 20, // tambahin jarak bawah biar label tidak mepet
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 20,
+                        padding: 15
+                    }
+                }
+            }
         }
     });
 
     // Chart 4: Stacked Bar
+    const jenisData = {!! json_encode($jenisData) !!};
+
+    const tahunJenis = jenisData.map(item => item.angkatan);
+    const fisik = jenisData.map(item => item.fisik);
+    const sensorik = jenisData.map(item => item.sensorik);
+    const mental = jenisData.map(item => item.mental);
+    const ganda = jenisData.map(item => item.ganda);
+    const lainnya = jenisData.map(item => item.lainnya);
     new Chart(document.getElementById('chartStacked'), {
         type: 'bar',
         data: {
-            labels: [2018, 2019, 2020, 2021, 2022, 2023, 2024],
+            labels: tahunJenis,
             datasets: [
-                { label: 'Fisik', data: [1,1,2,2,3,5,10], backgroundColor: '#f87171' },
-                { label: 'Sensorik', data: [0,1,1,2,2,3,5], backgroundColor: '#60a5fa' },
-                { label: 'Mental', data: [0,0,1,1,2,2,3], backgroundColor: '#34d399' },
-                { label: 'Ganda', data: [0,0,0,1,1,2,2], backgroundColor: '#a78bfa' },
-                { label: 'Lainnya', data: [0,0,0,0,1,1,1], backgroundColor: '#facc15' }
+                {
+                    label: 'Fisik',
+                    data: fisik,
+                    backgroundColor: '#3366cc'
+                },
+                {
+                    label: 'Sensorik',
+                    data: sensorik,
+                    backgroundColor: '#ff9900'
+                },
+                {
+                    label: 'Mental',
+                    data: mental,
+                    backgroundColor: '#dc3912'
+                },
+                {
+                    label: 'Ganda',
+                    data: ganda,
+                    backgroundColor: '#109618'
+                },
+                {
+                    label: 'Lainnya',
+                    data: lainnya,
+                    backgroundColor: '#990099'
+                }
             ]
         },
         options: {
             responsive: true,
-            plugins: { legend: { position: 'top' } },
-            scales: { x: { stacked: true }, y: { stacked: true } }
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    bottom: 20, // tambahin jarak bawah biar label tidak mepet
+                }
+            },
+            scales: {
+                x: { stacked: true },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    ticks: { precision: 0 }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.dataset.label}: ${context.parsed.y}`;
+                        }
+                    }
+                }
+            }
         }
     });
-function toggleUserMenu() {
-    const menu = document.getElementById('user-menu');
-    menu.classList.toggle('hidden');
-}
+        
+    function toggleUserMenu() {
+        const menu = document.getElementById('user-menu');
+        menu.classList.toggle('hidden');
+    }
 </script>
 </html>

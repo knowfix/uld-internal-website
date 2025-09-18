@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumni;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use App\Models\Layanan;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -13,12 +15,12 @@ class HomeController extends Controller
         // Statistik
         $totalMahasiswa = Mahasiswa::count();
         $disabilitas = Mahasiswa::selectRaw('LOWER(TRIM(ragam_disabilitas)) as jenis, COUNT(*) as total')
-                        ->groupBy('jenis')
-                        ->pluck('total', 'jenis');
+        ->groupBy('jenis')
+        ->pluck('total', 'jenis');
         $totalJenis = count($disabilitas);
         
         // sementara total lulusan = 0 karena belum ada kolom
-        $totalLulusan = Mahasiswa::select('ragam_disabilitas')->distinct()->count();;
+        $totalAlumni = Alumni::count();
 
         // total layanan dari tabel layanan
         $fakultas = Mahasiswa::selectRaw('LOWER(TRIM(fakultas)) as jenis, COUNT(*) as total')
@@ -27,34 +29,45 @@ class HomeController extends Controller
         $totalFakultas=count($fakultas);
 
         // Grafik Sebaran Mahasiswa per Fakultas
-        $mahasiswaPerFakultas = Mahasiswa::selectRaw('fakultas, COUNT(*) as total')
-            ->groupBy('fakultas')
-            ->pluck('total', 'fakultas');
-
-        // Grafik Jumlah Mahasiswa per Tahun Angkatan
-        $mahasiswaPerTahun = Mahasiswa::selectRaw('angkatan, COUNT(*) as total')
+        $dataFakultas = Mahasiswa::select('fakultas', DB::raw('count(*) as jumlah'))
+                ->groupBy('fakultas')
+                ->orderByDesc('jumlah')
+                ->get();
+        // Data line chart: jumlah mahasiswa disabilitas per tahun angkatan
+        $tahunData = Mahasiswa::select('angkatan', DB::raw('count(*) as jumlah'))
+            ->whereNotNull('angkatan')
             ->groupBy('angkatan')
-            ->pluck('total', 'angkatan');
+            ->orderBy('angkatan')
+            ->get();
 
-        // Pie Chart Ragam Disabilitas
-        $disabilitas = Mahasiswa::selectRaw('ragam_disabilitas, COUNT(*) as total')
+        $disabilitasData = Mahasiswa::select('ragam_disabilitas', DB::raw('count(*) as jumlah'))
             ->groupBy('ragam_disabilitas')
-            ->pluck('total', 'ragam_disabilitas');
+            ->orderByDesc('jumlah')
+            ->get();
 
         // Stacked Chart Mahasiswa per Jenis Disabilitas per Tahun
-        $stacked = Mahasiswa::selectRaw('angkatan, ragam_disabilitas, COUNT(*) as total')
-            ->groupBy('angkatan', 'ragam_disabilitas')
-            ->get();
+        $jenisData = Mahasiswa::select(
+            'angkatan',
+            DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Fisik" THEN 1 ELSE 0 END) as fisik'),
+            DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Sensorik" THEN 1 ELSE 0 END) as sensorik'),
+            DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Mental" THEN 1 ELSE 0 END) as mental'),
+            DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Ganda" THEN 1 ELSE 0 END) as ganda'),
+            DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Lainnya" THEN 1 ELSE 0 END) as lainnya')
+        )
+        ->groupBy('angkatan')
+        ->orderBy('angkatan')
+        ->get();
 
         return view('home', compact(
             'totalMahasiswa',
             'totalJenis',
-            'totalLulusan',
+            'totalAlumni',
             'totalFakultas',
-            'mahasiswaPerFakultas',
-            'mahasiswaPerTahun',
+            'dataFakultas',
+            'tahunData',
+            'jenisData',
+            'disabilitasData',
             'disabilitas',
-            'stacked'
         ));
     }
 }
