@@ -54,39 +54,39 @@
                 </div>
             </a>
             <a href="{{ route('mahasiswa.index') }}">
-                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
-                    <!-- Home Simple -->
+                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
+                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 mb-2
+                            hover:bg-[#517289] hover:text-white transition duration-200">
+                    
+                    <!-- Graduation Cap -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <ellipse cx="12" cy="5" rx="9" ry="3"/>
                     <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
                     <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
                     </svg>
-        
+
                     <!-- Teks -->
                     <span class="font-medium">Data Mahasiswa</span>
                 </div>
             </a>
-            <a href="#">
-                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
-                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
-                            hover:bg-[#517289] hover:text-white transition duration-200">
-                    
-                    <!-- Graduation Cap -->
+            <a href="{{ route('alumni.index') }}">
+                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
+                    <!-- Graduation -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" 
                         stroke="currentColor" stroke-width="2">
                         <path d="M22 10l-10-5L2 10l10 5 10-5z" 
-                            class="stroke-[#757575] group-hover:stroke-white"/>
+                            class=" group-hover:stroke-white"/>
                         <path d="M6 12v5c3 3 9 3 12 0v-5" 
-                            class="stroke-[#757575] group-hover:stroke-white"/>
+                            class=" group-hover:stroke-white"/>
                     </svg>
-
+        
                     <!-- Teks -->
                     <span class="font-medium">Data Alumni</span>
                 </div>
             </a>
-            <a href="#">
+            <a href="{{ route('ujian.index') }}">
                 <div class="group flex items-center space-x-3 bg-white text-[#757575] 
                             px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
                             hover:bg-[#517289] hover:text-white transition duration-200">
@@ -101,7 +101,7 @@
                     </svg>
 
                     <!-- Teks -->
-                    <span class="font-medium">Kegiatan</span>
+                    <span class="font-medium">Asesmen Ujian</span>
                 </div>
             </a>
 
@@ -114,11 +114,13 @@
         <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
             <!-- Home Simple -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" 
-                    d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
+                        fill="none" viewBox="0 0 24 24" 
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M22 10l-10-5L2 10l10 5 10-5z" 
+                            class=" group-hover:stroke-white"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5" 
+                            class=" group-hover:stroke-white"/>
+                    </svg>
 
             <!-- Teks -->
             <span class="font-medium text-2xl">Data Alumni</span>

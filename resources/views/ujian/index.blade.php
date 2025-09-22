@@ -92,8 +92,11 @@
                 </div>
             </a>
             <a href="{{ route('alumni.index') }}">
-                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
-                    <!-- Graduation -->
+                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
+                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 mb-2
+                            hover:bg-[#517289] hover:text-white transition duration-200">
+                    
+                    <!-- Graduation Cap -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" 
                         stroke="currentColor" stroke-width="2">
@@ -102,17 +105,14 @@
                         <path d="M6 12v5c3 3 9 3 12 0v-5" 
                             class=" group-hover:stroke-white"/>
                     </svg>
-        
+
                     <!-- Teks -->
                     <span class="font-medium">Data Alumni</span>
                 </div>
             </a>
             <a href="{{ route('ujian.index') }}">
-                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
-                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
-                            hover:bg-[#517289] hover:text-white transition duration-200">
-                    
-                    <!-- Graduation Cap -->
+                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
+                    <!-- Graduation -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="3" width="7" height="9" rx="1"/>
@@ -120,13 +120,11 @@
                     <rect x="14" y="12" width="7" height="9" rx="1"/>
                     <rect x="3" y="16" width="7" height="5" rx="1"/>
                     </svg>
-
+        
                     <!-- Teks -->
                     <span class="font-medium">Asesmen Ujian</span>
                 </div>
-            </a>
-
-            
+            </a>            
         </nav>
     </aside>
 
@@ -135,16 +133,15 @@
         <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
             <!-- Home Simple -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                        fill="none" viewBox="0 0 24 24" 
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M22 10l-10-5L2 10l10 5 10-5z" 
-                            class=" group-hover:stroke-white"/>
-                        <path d="M6 12v5c3 3 9 3 12 0v-5" 
-                            class=" group-hover:stroke-white"/>
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="9" rx="1"/>
+                    <rect x="14" y="3" width="7" height="5" rx="1"/>
+                    <rect x="14" y="12" width="7" height="9" rx="1"/>
+                    <rect x="3" y="16" width="7" height="5" rx="1"/>
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Data Alumni</span>
+            <span class="font-medium text-2xl">Data Asesmen Kebutuhan Ujian Mahasiswa</span>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100">
@@ -175,7 +172,7 @@
                         <span>Edit Data</span>
                     </a>
 
-                    <form id="delete-form" action="{{ route('alumni.bulkDelete') }}" method="POST" class="hidden">
+                    <form id="delete-form" action="{{ route('ujian.bulkDelete') }}" method="POST" class="hidden">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="ids" id="delete-ids">
@@ -192,7 +189,7 @@
                         </button>
                     </form>
 
-                    <a href="{{ route('alumni.create') }}" 
+                    <a href="{{ route('ujian.create') }}" 
                     class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
                             border border-[#174A6F] rounded-lg px-3 py-2 
                             hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
@@ -250,18 +247,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($alumnis as $alumni)
+                        @foreach($asesmen_ujians as $asesmen_ujian)
                         <tr>
                             <td class="p-2 border">
-                                <input type="checkbox" class="select-mahasiswa" value="{{ $alumni->id }}">
+                                <input type="checkbox" class="select-mahasiswa" value="{{ $asesmen_ujian->id }}">
                             </td>
-                            <td class="p-2 border">{{ $alumni->nama }}</td>
-                            <td class="p-2 border">{{ $alumni->fakultas }}</td>
-                            <td class="p-2 border">{{ $alumni->pendidikan }}</td>
-                            <td class="p-2 border">{{ $alumni->angkatan }}</td>
-                            <td class="p-2 border">{{ $alumni->ragam_disabilitas }}</td>
+                            <td class="p-2 border">{{ $asesmen_ujian->nama }}</td>
+                            <td class="p-2 border">{{ $asesmen_ujian->fakultas }}</td>
+                            <td class="p-2 border">{{ $asesmen_ujian->pendidikan }}</td>
+                            <td class="p-2 border">{{ $asesmen_ujian->angkatan }}</td>
+                            <td class="p-2 border">{{ $asesmen_ujian->ragam_disabilitas }}</td>
                             <td class="p-2 border text-center">
-                                <a href="{{ route('alumni.pdf', $alumni->id) }}" 
+                                <a href="{{ route('asesmen_ujian.pdf', $asesmen_ujian->id) }}" 
                                     class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
                                     Download PDF
                                 </a>
@@ -276,7 +273,7 @@
                                 @endif
                             </td> --}}
                             <td class="p-2 border text-center">
-                                <a href="{{ route('alumni.show', $alumni->id) }}" 
+                                <a href="{{ route('ujian.show', $asesmen_ujian->id) }}" 
                                 class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" 
                                         class="h-4 w-4 mr-1" 
@@ -316,7 +313,7 @@
             // Toggle Edit (hanya 1 terpilih)
             if (selected.length === 1) {
                 editBtn.classList.remove("hidden");
-                editBtn.href = "/alumni/" + selected[0] + "/edit";
+                editBtn.href = "/asesmen-ujian/" + selected[0] + "/edit";
             } else {
                 editBtn.classList.add("hidden");
                 editBtn.href = "#";

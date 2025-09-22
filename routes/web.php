@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\AsesmenUjianController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Models\Alumni;
+use App\Models\AsesmenUjian;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');  
 Route::post('/', [LoginController::class, 'login']);  
@@ -39,21 +41,22 @@ Route::middleware('auth')->group(function () {
     ->name('mahasiswa.bulkDelete');   
     Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show'])->name('mahasiswa.show');
     
-    // ROUTE ALUMNI
+    // make alumni
     Route::post('/mahasiswa/alumni', [MahasiswaController::class, 'jadikanAlumni'])
     ->name('mahasiswa.jadikanAlumni');
     
+    // ROUTE ALUMNI
     // Tambahkan ini
     Route::get('/alumni', [AlumniController::class, 'index'])->name('alumni.index');
-    Route::delete('/alumni/bulk-delete', [AlumniController::class, 'bulkDelete'])
-    ->name('alumni.bulkDelete');
     Route::get('/alumni/create', [AlumniController::class, 'create'])->name('alumni.create');
     Route::post('/alumni', [AlumniController::class, 'store'])->name('alumni.store');
-    Route::get('/alumni/{id}/pdf', [AlumniController::class, 'generatePdf'])
-    ->name('alumni.pdf');
+    Route::delete('/alumni/bulk-delete', [AlumniController::class, 'bulkDelete'])
+        ->name('alumni.bulkDelete');
+        Route::get('/alumni/{id}/pdf', [AlumniController::class, 'generatePdf'])
+        ->name('alumni.pdf');
     Route::get('/alumni/{id}/pdf/download', [AlumniController::class, 'downloadPdf'])
     // ->middleware('auth') // opsional, biar aman hanya user login
-    ->name('alumni.downloadPdf');
+        ->name('alumni.downloadPdf');
     
     // Form edit
     Route::get('/alumni/{id}/edit', [AlumniController::class, 'edit'])->name('alumni.edit');
@@ -61,5 +64,21 @@ Route::middleware('auth')->group(function () {
     // Proses update and delete
     Route::put('/alumni/{id}', [AlumniController::class, 'update'])->name('alumni.update');
     Route::get('/alumni/{id}', [AlumniController::class, 'show'])->name('alumni.show');
+    
+    // ROUTE ASESMEN UJIAN
+    Route::get('/asesmen-ujian', [AsesmenUjianController::class, 'index'])->name('ujian.index');
+    Route::get('/asesmen-ujian/create', [AsesmenUjianController::class, 'create'])->name('ujian.create');
+    Route::post('/asesmen-ujian', [AsesmenUjianController::class, 'store'])->name('ujian.store');
+    Route::get('/asesmen-ujian/{id}/pdf', [AsesmenUjianController::class, 'generatePdf'])
+    ->name('asesmen_ujian.pdf');
+    Route::get('/asesmen-ujian/{id}/pdf/download', [AsesmenUjianController::class, 'downloadPdf'])
+    // ->middleware('auth') // opsional, biar aman hanya user login
+    ->name('asesmen_ujian.downloadPdf');
+    // Proses update and delete
+    Route::put('/asesmen-ujian/{id}', [AsesmenUjianController::class, 'update'])->name('ujian.update');
+    Route::get('/asesmen-ujian/{id}', [AsesmenUjianController::class, 'show'])->name('ujian.show');
+    Route::delete('/asesmen-ujian/bulk-delete', [AsesmenUjianController::class, 'bulkDelete'])
+        ->name('ujian.bulkDelete');
+    // Form edit
+    Route::get('/asesmen-ujian/{id}/edit', [AsesmenUjianController::class, 'edit'])->name('ujian.edit');
 });
-

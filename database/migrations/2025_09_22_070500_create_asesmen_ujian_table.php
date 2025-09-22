@@ -9,12 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    // database/migrations/xxxx_xx_xx_create_alumnis_table.php
-public function up()
+    public function up(): void
     {
-        Schema::create('alumnis', function (Blueprint $table) {
+        Schema::create('asesmen_ujians', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('semester')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('nim')->unique();
@@ -31,17 +31,15 @@ public function up()
             $table->string('kendala')->nullable();
             $table->string('akomodasi')->nullable();
             $table->string('pendampingan')->nullable();
-            $table->string('pdf_path')->nullable();
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('alumnis');
+        Schema::dropIfExists('asesmen_ujian');
     }
 };

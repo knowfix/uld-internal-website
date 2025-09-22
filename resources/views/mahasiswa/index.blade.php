@@ -107,7 +107,7 @@
                     <span class="font-medium">Data Alumni</span>
                 </div>
             </a>
-            <a href="#">
+            <a href="{{ route('ujian.index') }}">
                 <div class="group flex items-center space-x-3 bg-white text-[#757575] 
                             px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
                             hover:bg-[#517289] hover:text-white transition duration-200">
@@ -122,7 +122,7 @@
                     </svg>
 
                     <!-- Teks -->
-                    <span class="font-medium">Kegiatan</span>
+                    <span class="font-medium">Asesmen Ujian</span>
                 </div>
             </a>
 

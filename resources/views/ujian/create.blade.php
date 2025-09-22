@@ -92,8 +92,11 @@
                 </div>
             </a>
             <a href="{{ route('alumni.index') }}">
-                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
-                    <!-- Graduation -->
+                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
+                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 mb-2
+                            hover:bg-[#517289] hover:text-white transition duration-200">
+                    
+                    <!-- Graduation Cap -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" 
                         stroke="currentColor" stroke-width="2">
@@ -102,17 +105,14 @@
                         <path d="M6 12v5c3 3 9 3 12 0v-5" 
                             class=" group-hover:stroke-white"/>
                     </svg>
-        
+
                     <!-- Teks -->
                     <span class="font-medium">Data Alumni</span>
                 </div>
             </a>
-            <a href="#">
-                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
-                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
-                            hover:bg-[#517289] hover:text-white transition duration-200">
-                    
-                    <!-- Graduation Cap -->
+            <a href="{{ route('ujian.index') }}">
+                <div class="flex items-center space-x-3 bg-[#083D62] text-white px-6 py-2 rounded-xl cursor-pointer h-15 mx-4 my-2">
+                    <!-- Graduation -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="3" width="7" height="9" rx="1"/>
@@ -120,13 +120,11 @@
                     <rect x="14" y="12" width="7" height="9" rx="1"/>
                     <rect x="3" y="16" width="7" height="5" rx="1"/>
                     </svg>
-
+        
                     <!-- Teks -->
-                    <span class="font-medium">Kegiatan</span>
+                    <span class="font-medium">Asesmen Ujian</span>
                 </div>
-            </a>
-
-            
+            </a>            
         </nav>
     </aside>
 
@@ -135,28 +133,27 @@
         <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
             <!-- Home Simple -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                        fill="none" viewBox="0 0 24 24" 
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M22 10l-10-5L2 10l10 5 10-5z" 
-                            class=" group-hover:stroke-white"/>
-                        <path d="M6 12v5c3 3 9 3 12 0v-5" 
-                            class=" group-hover:stroke-white"/>
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="9" rx="1"/>
+                    <rect x="14" y="3" width="7" height="5" rx="1"/>
+                    <rect x="14" y="12" width="7" height="9" rx="1"/>
+                    <rect x="3" y="16" width="7" height="5" rx="1"/>
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Data Alumni</span>
+            <span class="font-medium text-2xl">Data Asesmen Kebutuhan Ujian Mahasiswa</span>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
             <div class="max-w-5xl mx-auto bg-white rounded-xl shadow p-6">
             {{-- <div class="p-6 bg-white rounded-xl shadow"> --}}
-                <form action="{{ route('alumni.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('ujian.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- 1. Identitas Utama -->
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-semibold mb-4 text-[#083D62]">Identitas Utama</h2>
-                        <a href="{{ route('alumni.index') }}" 
+                        <a href="{{ route('ujian.index') }}" 
                         class="flex items-center space-x-1 text-gray-700 cursor-pointer  bg-gray-200 hover:bg-gray-300 p-2 rounded w-26">
                             <!-- Icon panah -->
                             <svg xmlns="http://www.w3.org/2000/svg" 
@@ -212,6 +209,10 @@
                             <label class="block font-medium text-[#083D62]">Angkatan</label>
                             <input type="text" name="angkatan" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
                         </div>
+                        <div>
+                            <label class="block font-medium text-[#083D62]">Semester</label>
+                            <input type="text" name="semester" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
+                        </div>
                         
                         <div>
                             <label class="block font-medium text-[#083D62]">Beasiswa</label>
@@ -230,8 +231,7 @@
                             <label class="block font-medium text-[#083D62]">Surat Keterangan Disabilitas</label>
                             <input type="text" name="surat_keterangan_link" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
                         </div>
-
-                        <div>
+                        {{-- <div>
                             <label class="block font-medium mb-1 text-[#083D62]">Surat Keterangan Disabilitas</label>
                             <div class="w-full border rounded-2xl p-2 pl-5 bg-[#FFFFFF]">
                                 <input type="file" 
@@ -244,7 +244,7 @@
                                             hover:file:bg-[#78a6ba] hover:file:text-[#FFFFFF]"
                                     accept=".pdf,.jpg,.png">
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <!-- 2. Informasi Tambahan -->
