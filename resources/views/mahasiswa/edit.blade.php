@@ -191,6 +191,5 @@
             const menu = document.getElementById('user-menu');
             menu.classList.toggle('hidden');
         }
-</script>
     </script>
 @endsection
