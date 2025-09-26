@@ -9,10 +9,20 @@ use Illuminate\Support\Facades\Storage;
 
 class AsesmenUjianController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $asesmen_ujians = AsesmenUjian::all();
-        return view('ujian.index', compact('asesmen_ujians'));
+
+        // Ambil nilai semester dari request (kalau ada)
+        $semester = $request->input('semester');
+        // Query data
+        $query = AsesmenUjian::query();
+        if (!empty($semester)) {
+            $query->where('semester', $semester);
+        }
+        $data = $query->latest()->paginate(10);
+
+        return view('ujian.index', compact( 'data', 'semester'));
     }
     public function create()
     {
@@ -149,14 +159,14 @@ class AsesmenUjianController extends Controller
         $asesmen_ujian->update($data);
 
         // === Regenerate PDF (opsional) ===
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('asesmen_ujian.pdf', compact('asesmen_ujian'));
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('ujian.pdf', compact('asesmen_ujian'));
         $pdfFilename = 'asesmen_ujian_' . preg_replace('/[\/\\\\]/', '-', $asesmen_ujian->nim) . '.pdf';
         $pdfPath = 'private/pdf_asesmen_ujian/' . $pdfFilename;
 
         Storage::put($pdfPath, $pdf->output());
         $asesmen_ujian->update(['pdf_path' => $pdfPath]);
 
-        return redirect()->route('alumni.index')->with('success', 'Data alumni berhasil diperbarui!');
+        return redirect()->route('ujian.index')->with('success', 'Data asesmen ujian berhasil diperbarui!');
     }
 
     public function show($id)

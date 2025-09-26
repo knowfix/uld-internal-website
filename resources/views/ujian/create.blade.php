@@ -252,7 +252,7 @@
 
                     <div class="grid grid-cols-2 gap-4">
                         <div class="col-span-2">
-                            <label class="block font-medium text-[#083D62]">Detail Disabilitas</label>
+                            <label class="block font-medium text-[#083D62]">Keperluan Perpanjangan Waktu</label>
                             <textarea name="detail_disabilitas" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
 
@@ -262,17 +262,17 @@
                         </div>
 
                         <div class="col-span-2">
-                            <label class="block font-medium text-[#083D62]">Kesulitan/Kendala saat proses belajar</label>
+                            <label class="block font-medium text-[#083D62]">Preferensi Format Soal Ujian</label>
                             <textarea name="kendala" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
 
                         <div class="col-span-2">
-                            <label class="block font-medium text-[#083D62]">Akomodasi yang diperlukan</label>
+                            <label class="block font-medium text-[#083D62]">Keperluan Pendampingan saat Ujian</label>
                             <textarea name="akomodasi" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
 
                         <div class="col-span-2">
-                            <label class="block font-medium text-[#083D62]">Pendampingan atau layanan</label>
+                            <label class="block font-medium text-[#083D62]">Penyesuaian Lain yang Diperlukan</label>
                             <textarea name="pendampingan" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
                     </div>

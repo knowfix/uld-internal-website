@@ -52,12 +52,17 @@
     @if($mahasiswa->surat_keterangan_link)
         <div class="section">
             <p style="margin: 2px 0;"><b>Surat Keterangan Disabilitas:</b></p>
-            <p style="margin: 2px 0;">{{ $mahasiswa->surat_keterangan_link ?? '-' }}</p>
+            {{-- <p style="margin: 2px 0;">{{ $mahasiswa->surat_keterangan_link ?? '-' }}</p> --}}
+            <p style="margin: 2px 0;">
+                <a href="{{ $mahasiswa->surat_keterangan_link }}" target="_blank">
+                    {{ $mahasiswa->surat_keterangan_link }}
+                </a>
+            </p>
         </div>
     @endif
 
-    <div class="signature">
-        <p style="margin: 2px 0;">Wuri Handayani, Ph.D</p>
+    <div class="section">
+        <p style="margin: 20px 0 0 0;">Wuri Handayani, Ph.D</p>
         <p style="margin: 2px 0;">Ketua Unit Layanan Disabilitas</p>
     </div>
 </body>

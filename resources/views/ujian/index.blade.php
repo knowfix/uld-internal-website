@@ -223,7 +223,30 @@
                     </button>
                 </div>
             </div>
-            <div class="p-6">
+            <!-- Filter Semester -->
+            <form method="GET" action="{{ route('ujian.index') }}" class="mb-4">
+                <div class="relative w-64">
+                    <select name="semester" 
+                        class="w-full px-3 py-2 ml-6 mt-5 pr-10 border rounded-lg appearance-none focus:ring-2 focus:ring-[#1F4E79]"
+                        onchange="this.form.submit()">
+                        <option value="">-- Semua Semester --</option>
+                        <option value="Gasal 2021/2022" {{ $semester == 'Gasal 2021/2022' ? 'selected' : '' }}>Gasal 2021/2022</option>
+                        <option value="Genap 2021/2022" {{ $semester == 'Genap 2021/2022' ? 'selected' : '' }}>Genap 2021/2022</option>
+                        <option value="Gasal 2022/2023" {{ $semester == 'Gasal 2022/2023' ? 'selected' : '' }}>Gasal 2022/2023</option>
+                        <option value="Genap 2022/2023" {{ $semester == 'Genap 2022/2023' ? 'selected' : '' }}>Genap 2022/2023</option>
+                    </select>
+
+                    <!-- Panah custom -->
+                    <div class="absolute inset-y-0 right-0 top-5 flex items-center pointer-events-none text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="pl-6 pr-6 pb-6 pt-2">
                 @if(session('success'))
                     <div class="bg-green-100 text-green-700 p-2 rounded mb-4">
                         {{ session('success') }}
@@ -240,14 +263,14 @@
                             <th class="p-2 border">Nama</th>
                             <th class="p-2 border">Fakultas</th>
                             <th class="p-2 border">Pendidikan</th>
-                            <th class="p-2 border">Angkatan</th>
+                            <th class="p-2 border">Semester</th>
                             <th class="p-2 border">Jenis Disabilitas</th>
                             <th class="p-2 border">Surat Disabilitas</th>
                             <th class="p-2 border">Detail</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($asesmen_ujians as $asesmen_ujian)
+                        @foreach($data as $asesmen_ujian)
                         <tr>
                             <td class="p-2 border">
                                 <input type="checkbox" class="select-mahasiswa" value="{{ $asesmen_ujian->id }}">
@@ -255,7 +278,7 @@
                             <td class="p-2 border">{{ $asesmen_ujian->nama }}</td>
                             <td class="p-2 border">{{ $asesmen_ujian->fakultas }}</td>
                             <td class="p-2 border">{{ $asesmen_ujian->pendidikan }}</td>
-                            <td class="p-2 border">{{ $asesmen_ujian->angkatan }}</td>
+                            <td class="p-2 border">{{ $asesmen_ujian->semester }}</td>
                             <td class="p-2 border">{{ $asesmen_ujian->ragam_disabilitas }}</td>
                             <td class="p-2 border text-center">
                                 <a href="{{ route('asesmen_ujian.pdf', $asesmen_ujian->id) }}" 
