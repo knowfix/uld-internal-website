@@ -73,17 +73,18 @@
                     </button>
                 </form>
 
-
-                <a href="{{ route('mahasiswa.create') }}" 
-                class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
-                        border border-[#174A6F] rounded-lg px-3 py-2 
-                        hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                    </svg>
-                    <span>Tambah Data</span>
-                </a>
+                @if(auth()->user()->role === 'superadmin')
+                    <a href="{{ route('mahasiswa.create') }}" 
+                        class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
+                                border border-[#174A6F] rounded-lg px-3 py-2 
+                                hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span>Tambah Data</span>
+                    </a>
+                @endif
                 {{-- Menu Export !!!Pending --}}
                 {{-- <button  class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
                         border border-[#174A6F] rounded-lg px-3 py-2 
@@ -118,9 +119,11 @@
             <table class="w-full border">
                 <thead>
                     <tr class="bg-gray-200">
-                        <th class="p-2 border text-center">
-                            <input type="checkbox" id="select-all">
-                        </th>
+                        @if(auth()->user()->role === 'superadmin')
+                            <th class="p-2 border text-center">
+                                <input type="checkbox" id="select-all">
+                            </th>
+                        @endif
                         {{-- <th class="p-2 border"></th> --}}
                         <th class="p-2 border">Nama</th>
                         <th class="p-2 border">Fakultas</th>
@@ -134,9 +137,11 @@
                 <tbody>
                     @foreach($mahasiswas as $mhs)
                     <tr>
-                        <td class="p-2 border text-center">
-                            <input type="checkbox" class="select-mahasiswa" value="{{ $mhs->id }}">
-                        </td>
+                        @if(auth()->user()->role === 'superadmin')
+                            <td class="p-2 border text-center">
+                                <input type="checkbox" class="select-mahasiswa" value="{{ $mhs->id }}">
+                            </td>
+                        @endif
                         <td class="p-2 border">{{ $mhs->nama }}</td>
                         <td class="p-2 border">{{ $mhs->fakultas }}</td>
                         <td class="p-2 border">{{ $mhs->pendidikan }}</td>

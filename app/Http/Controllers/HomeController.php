@@ -52,7 +52,7 @@ class HomeController extends Controller
             DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Sensorik" THEN 1 ELSE 0 END) as sensorik'),
             DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Mental" THEN 1 ELSE 0 END) as mental'),
             DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Ganda" THEN 1 ELSE 0 END) as ganda'),
-            DB::raw('SUM(CASE WHEN ragam_disabilitas = "Disabilitas Lainnya" THEN 1 ELSE 0 END) as lainnya')
+            DB::raw('SUM(CASE WHEN ragam_disabilitas NOT IN ("Disabilitas Fisik", "Disabilitas Sensorik", "Disabilitas Mental", "Disabilitas Ganda") THEN 1 ELSE 0 END) as lainnya')
         )
         ->groupBy('angkatan')
         ->orderBy('angkatan')
