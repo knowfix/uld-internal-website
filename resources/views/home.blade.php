@@ -6,17 +6,33 @@
 <!-- Main Content -->
 <main class="flex-1 bg-gray-100 flex flex-col">
     <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
-        <!-- Home Simple -->
+        <!-- Icon Home -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" 
-                    d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>
         </svg>
 
-        <!-- Teks -->
+        <!-- Judul -->
         <span class="font-medium text-2xl">Dashboard</span>
+        
+        <!-- Narahubung (kanan) -->
+        <div class="ml-auto flex items-center space-x-3 text-sm">
+            <!-- Ikon Email -->
+            <!-- Ikon WhatsApp -->
+            <a href="https://wa.me/6282227021332" target="_blank"
+            class="flex items-center space-x-1 hover:text-gray-200 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
+                </svg>
+                <span>Hubungi Kami</span>
+            </a>
+        </div>
     </div>
+
     <!-- Section Statistik -->
     <section class="relative bg-cover bg-center h-64 flex items-center justify-center"
         style="background-image: url('{{ asset('images/fotoKantorULD.jpg') }}');">

@@ -17,6 +17,20 @@
 
             <!-- Teks -->
             <span class="font-medium text-2xl">Data Asesmen Kebutuhan Ujian Mahasiswa</span>
+            <!-- Narahubung (kanan) -->
+            <div class="ml-auto flex items-center space-x-3 text-sm">
+                <!-- Ikon Email -->
+                <!-- Ikon WhatsApp -->
+                <a href="https://wa.me/6282227021332" target="_blank"
+                class="flex items-center space-x-1 hover:text-gray-200 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
+                    </svg>
+                    <span>Hubungi Kami</span>
+                </a>
+            </div>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
@@ -29,98 +43,77 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-semibold mb-4 text-[#083D62]">Identitas Utama</h2>
                         <a href="{{ route('ujian.index') }}" 
-                        class="flex items-center space-x-1 text-gray-700 cursor-pointer  bg-gray-200 hover:bg-gray-300 p-2 rounded w-26">
-                            <!-- Icon panah -->
+                        class="flex items-center space-x-1 text-gray-700 cursor-pointer bg-gray-200 hover:bg-gray-300 p-2 rounded w-26">
                             <svg xmlns="http://www.w3.org/2000/svg" 
                                 class="h-5 w-5" fill="none" 
                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                             </svg>
-                            <span class="font-medium  ">Kembali</span>
+                            <span class="font-medium">Kembali</span>
                         </a>
+                    </div>
 
+                    {{-- Dropdown Pilih Mahasiswa --}}
+                    <div class="mb-6">
+                        <label class="block font-medium text-[#083D62] mb-1">Pilih Mahasiswa</label>
+                        <select id="mahasiswaSelect" name="mahasiswa_id" 
+                                class="w-full border rounded-2xl p-2 mt-1 focus:ring-[#083D62] focus:border-[#083D62]">
+                            <option value="">-- Pilih Mahasiswa --</option>
+                            @foreach($mahasiswas as $mhs)
+                                <option value="{{ $mhs->id }}"
+                                    data-nama="{{ $mhs->nama }}"
+                                    data-jenis_kelamin="{{ $mhs->jenis_kelamin }}"
+                                    data-tanggal_lahir="{{ $mhs->tanggal_lahir }}"
+                                    data-nim="{{ $mhs->nim }}"
+                                    data-prodi="{{ $mhs->prodi }}"
+                                    data-fakultas="{{ $mhs->fakultas }}"
+                                    data-ragam="{{ $mhs->ragam_disabilitas }}">
+                                    {{ $mhs->nama }} ({{ $mhs->nim }})
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block font-medium text-[#083D62]">Nama Lengkap</label>
-                            <input type="text" name="nama" class="w-full border rounded-2xl p-2 mt-1" required>
+                            <input type="text" id="nama" name="nama" class="w-full border rounded-2xl p-2 mt-1" readonly>
                         </div>
-
                         <div>
                             <label class="block font-medium text-[#083D62]">Jenis Kelamin</label>
-                            <select name="jenis_kelamin" class="w-full border rounded-2xl p-2 mt-1 " required>
-                                <option value="">-- Pilih --</option>
-                                <option value="Laki-laki">Laki-laki</option>
-                                <option value="Perempuan">Perempuan</option>
-                            </select>
+                            <input type="text" id="jenis_kelamin" name="jenis_kelamin" class="w-full border rounded-2xl p-2 mt-1" readonly>
                         </div>
-
                         <div>
                             <label class="block font-medium text-[#083D62]">Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" class="w-full border rounded-2xl p-2  mt-1" required>
+                            <input type="text" id="tanggal_lahir" name="tanggal_lahir" class="w-full border rounded-2xl p-2 mt-1" readonly>
                         </div>
 
                         <div>
                             <label class="block font-medium text-[#083D62]">NIM</label>
-                            <input type="text" name="nim" class="w-full border rounded-2xl p-2  mt-1" required>
+                            <input type="text" id="nim" name="nim" class="w-full border rounded-2xl p-2 mt-1" readonly>
                         </div>
 
                         <div>
                             <label class="block font-medium text-[#083D62]">Program Studi</label>
-                            <input type="text" name="prodi" class="w-full border rounded-2xl p-2  mt-1" required>
+                            <input type="text" id="prodi" name="prodi" class="w-full border rounded-2xl p-2 mt-1" readonly>
                         </div>
 
                         <div>
                             <label class="block font-medium text-[#083D62]">Fakultas</label>
-                            <input type="text" name="fakultas" class="w-full border rounded-2xl p-2  mt-1" required>
+                            <input type="text" id="fakultas" name="fakultas" class="w-full border rounded-2xl p-2 mt-1" readonly>
                         </div>
 
                         <div>
-                            <label class="block font-medium text-[#083D62]">Pendidikan</label>
-                            <input type="text" name="pendidikan" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
+                            <label class="block font-medium text-[#083D62]">Ragam Disabilitas</label>
+                            <input type="text" id="ragam_disabilitas" name="ragam_disabilitas" class="w-full border rounded-2xl p-2 mt-1" readonly>
                         </div>
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Angkatan</label>
-                            <input type="text" name="angkatan" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
-                        </div>
+
                         <div>
                             <label class="block font-medium text-[#083D62]">Semester</label>
-                            <input type="text" name="semester" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
+                            <input type="text" name="semester" class="w-full border rounded-2xl p-2 mt-1" required>
                         </div>
-                        
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Beasiswa</label>
-                            <input type="text" name="beasiswa" class="w-full border rounded-2xl p-2  mt-1">
-                        </div>
-                        
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Nomor HP</label>
-                            <input type="text" name="nomor_hp" class="w-full border rounded-2xl p-2  mt-1" required>
-                        </div>
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Ragam Disabilitas</label>
-                            <input type="text" name="ragam_disabilitas" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
-                        </div>
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Surat Keterangan Disabilitas</label>
-                            <input type="text" name="surat_keterangan_link" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
-                        </div>
-                        {{-- <div>
-                            <label class="block font-medium mb-1 text-[#083D62]">Surat Keterangan Disabilitas</label>
-                            <div class="w-full border rounded-2xl p-2 pl-5 bg-[#FFFFFF]">
-                                <input type="file" 
-                                    name="surat_keterangan" 
-                                    class="w-full text-sm text-gray-600
-                                            file:mr-4 file:py-2 file:px-4
-                                            file:rounded-md file:border-0
-                                            file:text-sm file:font-semibold
-                                            file:bg-[#dedede] file:text-[#7B7E89]
-                                            hover:file:bg-[#78a6ba] hover:file:text-[#FFFFFF]"
-                                    accept=".pdf,.jpg,.png">
-                            </div>
-                        </div> --}}
                     </div>
+
 
                     <!-- 2. Informasi Tambahan -->
                     <h2 class="text-2xl font-semibold mt-8 mb-4 text-[#083D62]">Informasi Tambahan</h2>
@@ -128,7 +121,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="col-span-2">
                             <label class="block font-medium text-[#083D62]">Keperluan Perpanjangan Waktu</label>
-                            <textarea name="detail_disabilitas" class="w-full border rounded-2xl p-2 mt-2"></textarea>
+                            <textarea name="keperluan_perpanjangan" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
 
                         <div class="col-span-2">
@@ -138,17 +131,17 @@
 
                         <div class="col-span-2">
                             <label class="block font-medium text-[#083D62]">Preferensi Format Soal Ujian</label>
-                            <textarea name="kendala" class="w-full border rounded-2xl p-2 mt-2"></textarea>
+                            <textarea name="preferensi_format" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
 
                         <div class="col-span-2">
                             <label class="block font-medium text-[#083D62]">Keperluan Pendampingan saat Ujian</label>
-                            <textarea name="akomodasi" class="w-full border rounded-2xl p-2 mt-2"></textarea>
+                            <textarea name="keperluan_pendampingan" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
 
                         <div class="col-span-2">
                             <label class="block font-medium text-[#083D62]">Penyesuaian Lain yang Diperlukan</label>
-                            <textarea name="pendampingan" class="w-full border rounded-2xl p-2 mt-2"></textarea>
+                            <textarea name="penyesuaian_lain" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
                     </div>
 
@@ -202,6 +195,23 @@ function toggleUserMenu() {
     const menu = document.getElementById('user-menu');
     menu.classList.toggle('hidden');
 }
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const mahasiswaSelect = document.getElementById('mahasiswaSelect');
+
+    mahasiswaSelect.addEventListener('change', function() {
+        const selected = this.options[this.selectedIndex];
+        document.getElementById('nama').value = selected.dataset.nama || '';
+        document.getElementById('jenis_kelamin').value = selected.dataset.jenis_kelamin || '';
+        document.getElementById('tanggal_lahir').value = selected.dataset.tanggal_lahir || '';
+        document.getElementById('nim').value = selected.dataset.nim || '';
+        document.getElementById('prodi').value = selected.dataset.prodi || '';
+        document.getElementById('fakultas').value = selected.dataset.fakultas || '';
+        document.getElementById('ragam_disabilitas').value = selected.dataset.ragam || '';
+    });
+});
 </script>
 
 @endsection

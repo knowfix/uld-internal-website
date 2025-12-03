@@ -109,6 +109,20 @@
                     <span class="font-medium">Asesmen Ujian</span>
                 </div>
             </a>
+            <a href="{{ route('tendik.index') }}">
+                <div class="group flex items-center space-x-3 bg-white text-[#757575] 
+                            px-6 py-1 rounded-xl cursor-pointer h-15 mx-4 my-2
+                            hover:bg-[#517289] hover:text-white transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" 
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10l-10-5L2 10l10 5 10-5z" 
+                            class="stroke-[#757575] group-hover:stroke-white"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5" 
+                            class="stroke-[#757575] group-hover:stroke-white"/>
+                    </svg>
+                    <span class="font-medium">Data Dosen/Tendik</span>
+                </div>
+            </a>
         </nav>
     </aside>
 

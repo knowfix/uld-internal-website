@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\tendikController;
 use App\Models\Alumni;
 use App\Models\AsesmenUjian;
 
@@ -81,4 +82,22 @@ Route::middleware('auth')->group(function () {
         ->name('ujian.bulkDelete');
     // Form edit
     Route::get('/asesmen-ujian/{id}/edit', [AsesmenUjianController::class, 'edit'])->name('ujian.edit');
+    
+    // ROUTE TENDIK DOSEN
+    Route::get('/dosen-tendik', [tendikController::class, 'index'])->name('tendik.index');
+    Route::get('/dosen-tendik/create', [tendikController::class, 'create'])->name('tendik.create');
+    Route::post('/dosen-tendik', [tendikController::class, 'store'])->name('tendik.store');
+    Route::get('/dosen-tendik/{id}/pdf', [tendikController::class, 'generatePdf'])
+    ->name('tendik.pdf');
+    Route::get('/dosen-tendik/{id}/pdf/download', [tendikController::class, 'downloadPdf'])
+    // ->middleware('auth') // opsional, biar aman hanya user login
+    ->name('tendik.downloadPdf');
+    // Proses update and delete
+    Route::put('/dosen-tendik/{id}', [tendikController::class, 'update'])->name('tendik.update');
+    Route::get('/dosen-tendik/{id}', [tendikController::class, 'show'])->name('tendik.show');
+    Route::delete('/dosen-tendik/bulk-delete', [tendikController::class, 'bulkDelete'])
+        ->name('tendik.bulkDelete');
+    // Form edit
+    Route::get('/dosen-tendik/{id}/edit', [tendikController::class, 'edit'])->name('tendik.edit');
+    
 });

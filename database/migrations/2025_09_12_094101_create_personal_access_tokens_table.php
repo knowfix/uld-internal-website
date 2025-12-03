@@ -1,4 +1,4 @@
-<?php
+"1|Rl5kFpQRGB0EePAJEu2aYULP4EeYxz2UqcG0iH2nfdcf025e<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

@@ -36,22 +36,22 @@
 
     <div class="section">
         <p style="margin: 2px 0;"><b>Keperluan Perpanjangan Waktu:</b></p>
-        <p style="margin: 2px 0; text-align: justify;">{{ $asesmen_ujian->detail_disabilitas ?? '-' }}</p>
+        <p style="margin: 2px 0; text-align: justify;">{{ $asesmen_ujian->keperluan_perpanjangan ?? '-' }}</p>
     </div>
 
     <div class="section">
         <p style="margin: 2px 0;"><b>Preferensi Format Soal Ujian:</b></p>
-        <p style="margin: 2px 0; text-align: justify;">{{ $asesmen_ujian->kendala ?? '-' }}</p>
+        <p style="margin: 2px 0; text-align: justify;">{{ $asesmen_ujian->preferensi_format ?? '-' }}</p>
     </div>
 
     <div class="section">
         <p style="margin: 2px 0;"><b>Keperluan Pendampingan saat Ujian:</b></p>
-        <p style="margin: 2px 0; text-align: justify;">{{ $asesmen_ujian->akomodasi ?? '-' }}</p>
+        <p style="margin: 2px 0; text-align: justify;">{{ $asesmen_ujian->keperluan_pendampingan ?? '-' }}</p>
     </div>
     
     <div class="section">
         <p style="margin: 2px 0;"><b>Penyesuaian Lain yang Diperlukan:</b></p>
-        <p style="margin: 2px 0; text-align: justify;">{{ $asesmen_ujian->pendampingan ?? '-' }}</p>
+        <p style="margin: 2px 0; text-align: justify;">{{ $asesmen_ujian->penyesuaian_lain ?? '-' }}</p>
     </div>
 
     <div class="section">

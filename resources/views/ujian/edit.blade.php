@@ -17,6 +17,20 @@
 
             <!-- Teks -->
             <span class="font-medium text-2xl">Data Asesmen Kebutuhan Ujian Mahasiswa</span>
+            <!-- Narahubung (kanan) -->
+            <div class="ml-auto flex items-center space-x-3 text-sm">
+                <!-- Ikon Email -->
+                <!-- Ikon WhatsApp -->
+                <a href="https://wa.me/6282227021332" target="_blank"
+                class="flex items-center space-x-1 hover:text-gray-200 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
+                    </svg>
+                    <span>Hubungi Kami</span>
+                </a>
+            </div>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
@@ -86,51 +100,17 @@
                         </div>
 
                         <div>
-                            <label class="block font-medium text-[#083D62]">Pendidikan</label>
-                            <input type="text" name="pendidikan" 
-                                value="{{ old('pendidikan', $asesmen_ujian->pendidikan) }}" 
-                                class="w-full border rounded-2xl p-2 mt-1" required>
-                        </div>
-
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Angkatan</label>
-                            <input type="text" name="angkatan" 
-                                value="{{ old('angkatan', $asesmen_ujian->angkatan) }}" 
-                                class="w-full border rounded-2xl p-2 mt-1" required>
-                        </div>
-                        <div>
                             <label class="block font-medium text-[#083D62]">Semester</label>
                             <input type="text" name="semester" 
                                 value="{{ old('semester', $asesmen_ujian->semester) }}" 
                                 class="w-full border rounded-2xl p-2 mt-1" required>
-                        </div>
-
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Beasiswa</label>
-                            <input type="text" name="beasiswa" 
-                                value="{{ old('beasiswa', $asesmen_ujian->beasiswa) }}" 
-                                class="w-full border rounded-2xl p-2 mt-1">
-                        </div>
-
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Nomor HP</label>
-                            <input type="text" name="nomor_hp" 
-                                value="{{ old('nomor_hp', $asesmen_ujian->nomor_hp) }}" 
-                                class="w-full border rounded-2xl p-2 mt-1" required>
-                        </div>
+                        </div>  
 
                         <div>
                             <label class="block font-medium text-[#083D62]">Ragam Disabilitas</label>
                             <input type="text" name="ragam_disabilitas" 
                                 value="{{ old('ragam_disabilitas', $asesmen_ujian->ragam_disabilitas) }}" 
                                 class="w-full border rounded-2xl p-2 mt-1" required>
-                        </div>
-
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Surat Keterangan Disabilitas</label>
-                            <input type="text" name="surat_keterangan_link" 
-                                value="{{ old('surat_keterangan_link', $asesmen_ujian->surat_keterangan_link) }}" 
-                                class="w-full border rounded-2xl p-2 mt-1">
                         </div>
 
                         {{-- <div>
@@ -158,7 +138,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="col-span-2">
                             <label class="block font-medium text-[#083D62]">Keperluan Perpanjangan Waktu</label>
-                            <textarea name="detail_disabilitas" class="w-full border rounded-2xl p-2 mt-2">{{ old('detail_disabilitas', $asesmen_ujian->detail_disabilitas) }}</textarea>
+                            <textarea name="keperluan_perpanjangan" class="w-full border rounded-2xl p-2 mt-2">{{ old('detail_disabilitas', $asesmen_ujian->detail_disabilitas) }}</textarea>
                         </div>
 
                         <div class="col-span-2">
@@ -168,17 +148,17 @@
 
                         <div class="col-span-2">
                             <label class="block font-medium text-[#083D62]">Preferensi Format Soal Ujian</label>
-                            <textarea name="kendala" class="w-full border rounded-2xl p-2 mt-2">{{ old('kendala', $asesmen_ujian->kendala) }}</textarea>
+                            <textarea name="preferensi_format" class="w-full border rounded-2xl p-2 mt-2">{{ old('kendala', $asesmen_ujian->kendala) }}</textarea>
                         </div>
 
                         <div class="col-span-2">
                             <label class="block font-medium text-[#083D62]">Keperluan Pendampingan saat Ujian</label>
-                            <textarea name="akomodasi" class="w-full border rounded-2xl p-2 mt-2">{{ old('akomodasi', $asesmen_ujian->akomodasi) }}</textarea>
+                            <textarea name="keperluan_pendampingan" class="w-full border rounded-2xl p-2 mt-2">{{ old('akomodasi', $asesmen_ujian->akomodasi) }}</textarea>
                         </div>
 
                         <div class="col-span-2">
                             <label class="block font-medium text-[#083D62]">Penyesuaian Lain yang Diperlukan</label>
-                            <textarea name="pendampingan" class="w-full border rounded-2xl p-2 mt-2">{{ old('pendampingan', $asesmen_ujian->pendampingan) }}</textarea>
+                            <textarea name="penyesuaian_lain" class="w-full border rounded-2xl p-2 mt-2">{{ old('pendampingan', $asesmen_ujian->pendampingan) }}</textarea>
                         </div>
                     </div>
 

@@ -1,4 +1,4 @@
-@extends('layout.sideBarMahasiswa')
+@extends('layout.sideBarDosen')
 
 @section('title', 'Dashboard | Mahasiswa Disabilitas')
 
@@ -8,14 +8,16 @@
         <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
             <!-- Home Simple -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                    <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
-                    <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
+                        fill="none" viewBox="0 0 24 24" 
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M22 10l-10-5L2 10l10 5 10-5z" 
+                            class=" group-hover:stroke-white"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5" 
+                            class=" group-hover:stroke-white"/>
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Data Mahasiswa</span>
+            <span class="font-medium text-2xl">Data Dosen dan Tendik</span>
             <!-- Narahubung (kanan) -->
             <div class="ml-auto flex items-center space-x-3 text-sm">
                 <!-- Ikon Email -->
@@ -35,13 +37,13 @@
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
             <div class="max-w-5xl mx-auto bg-white rounded-xl shadow p-6">
             {{-- <div class="p-6 bg-white rounded-xl shadow"> --}}
-                <form action="{{ route('mahasiswa.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tendik.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- 1. Identitas Utama -->
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-semibold mb-4 text-[#083D62]">Identitas Utama</h2>
-                        <a href="{{ route('mahasiswa.index') }}" 
+                        <a href="{{ route('tendik.index') }}" 
                         class="flex items-center space-x-1 text-gray-700 cursor-pointer  bg-gray-200 hover:bg-gray-300 p-2 rounded w-26">
                             <!-- Icon panah -->
                             <svg xmlns="http://www.w3.org/2000/svg" 
@@ -75,7 +77,7 @@
                         </div>
 
                         <div>
-                            <label class="block font-medium text-[#083D62]">NIM</label>
+                            <label class="block font-medium text-[#083D62]">NIP</label>
                             <input type="text" name="nim" class="w-full border rounded-2xl p-2  mt-1" required>
                         </div>
 
@@ -96,11 +98,6 @@
                         <div>
                             <label class="block font-medium text-[#083D62]">Angkatan</label>
                             <input type="text" name="angkatan" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
-                        </div>
-                        
-                        <div>
-                            <label class="block font-medium text-[#083D62]">Beasiswa</label>
-                            <input type="text" name="beasiswa" class="w-full border rounded-2xl p-2  mt-1">
                         </div>
                         
                         <div>
@@ -173,6 +170,7 @@
         </div>
 
     </main>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const checkboxes = document.querySelectorAll(".select-mahasiswa");
@@ -190,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Toggle Edit (hanya 1 terpilih)
             if (selected.length === 1) {
                 editBtn.classList.remove("hidden");
-                editBtn.href = "/mahasiswa/" + selected[0] + "/edit";
+                editBtn.href = "/tendik/" + selected[0] + "/edit";
             } else {
                 editBtn.classList.add("hidden");
                 editBtn.href = "#";
@@ -212,4 +210,5 @@ function toggleUserMenu() {
     menu.classList.toggle('hidden');
 }
 </script>
+
 @endsection

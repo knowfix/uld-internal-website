@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AsesmenUjian;
+use App\Models\Mahasiswa;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,16 +25,17 @@ class AsesmenUjianController extends Controller
 
         return view('ujian.index', compact( 'data', 'semester'));
     }
+
     public function create()
     {
-        return view('ujian.create');
+        $mahasiswas = Mahasiswa::select('id', 'nama', 'jenis_kelamin', 'tanggal_lahir', 'nim', 'prodi', 'fakultas', 'ragam_disabilitas')->get();
+        return view('ujian.create',compact('mahasiswas'));
     }
     public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'nim' => 'required|string|max:20|unique:mahasiswas',
-            // 'surat_keterangan' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+            'nim' => 'required|string|max:20',
         ]);
 
         $data = $request->all();
@@ -134,44 +136,41 @@ class AsesmenUjianController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:255',
-            'nim' => 'required|string|max:20|unique:asesmen_ujians,nim,' . $id, // nim boleh sama asal milik dirinya
-            'surat_keterangan' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+            'nim' => 'required|string|max:20|unique:asesmen_ujians,nim,' . $id,
         ]);
 
         $data = $request->all();
 
-        // Jika ada file baru diupload
-        // if ($request->hasFile('surat_keterangan')) {
-        //     // Hapus file lama jika ada
-        //     if ($asesmen_ujian->surat_keterangan && Storage::exists('private/surat_keterangan/' . $asesmen_ujian->surat_keterangan)) {
-        //         Storage::delete('private/surat_keterangan/' . $asesmen_ujian->surat_keterangan);
-        //     }
-
-        //     $file = $request->file('surat_keterangan');
-        //     $filename = time() . '_' . $file->getClientOriginalName();
-        //     $file->storeAs('private/surat_keterangan', $filename);
-        //     $data['surat_keterangan'] = $filename;
-        // } else {
-        //     unset($data['surat_keterangan']); // jangan timpa kalau kosong
-        // }
-
-        // Update mahasiswa
+        // Update data di database
         $asesmen_ujian->update($data);
 
-        // === Regenerate PDF (opsional) ===
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('ujian.pdf', compact('asesmen_ujian'));
+        // ✅ Refresh data dari database supaya variabel ini punya nilai terbaru
+        $asesmen_ujian->refresh();
+
+        // 🔁 Regenerate PDF baru
+        $pdf = Pdf::loadView('ujian.pdf', compact('asesmen_ujian'));
         $pdfFilename = 'asesmen_ujian_' . preg_replace('/[\/\\\\]/', '-', $asesmen_ujian->nim) . '.pdf';
         $pdfPath = 'private/pdf_asesmen_ujian/' . $pdfFilename;
 
+        // Hapus PDF lama (opsional, supaya tidak menumpuk)
+        if ($asesmen_ujian->pdf_path && Storage::exists($asesmen_ujian->pdf_path)) {
+            Storage::delete($asesmen_ujian->pdf_path);
+        }
+
+        // Simpan PDF baru
         Storage::put($pdfPath, $pdf->output());
+
+        // Update path PDF
         $asesmen_ujian->update(['pdf_path' => $pdfPath]);
 
-        return redirect()->route('ujian.index')->with('success', 'Data asesmen ujian berhasil diperbarui!');
+        return redirect()->route('ujian.index')->with('success', 'Data asesmen ujian berhasil diperbarui dan PDF telah dibuat ulang!');
     }
+
 
     public function show($id)
     {
         $asesmen_ujian = AsesmenUjian::findOrFail($id);
         return view('ujian.show', compact('asesmen_ujian'));
     }
+    
 }

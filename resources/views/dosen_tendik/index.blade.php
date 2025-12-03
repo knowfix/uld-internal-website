@@ -1,4 +1,4 @@
-@extends('layout.sideBarUjian')
+@extends('layout.sideBarDosen')
 
 @section('title', 'Dashboard | Mahasiswa Disabilitas')
 
@@ -8,15 +8,16 @@
         <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
             <!-- Home Simple -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="7" height="9" rx="1"/>
-                    <rect x="14" y="3" width="7" height="5" rx="1"/>
-                    <rect x="14" y="12" width="7" height="9" rx="1"/>
-                    <rect x="3" y="16" width="7" height="5" rx="1"/>
+                        fill="none" viewBox="0 0 24 24" 
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M22 10l-10-5L2 10l10 5 10-5z" 
+                            class=" group-hover:stroke-white"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5" 
+                            class=" group-hover:stroke-white"/>
             </svg>
 
             <!-- Teks -->
-            <span class="font-medium text-2xl">Data Asesmen Kebutuhan Ujian Mahasiswa</span>
+            <span class="font-medium text-2xl">Data Dosen dan Tendik</span>
             <!-- Narahubung (kanan) -->
             <div class="ml-auto flex items-center space-x-3 text-sm">
                 <!-- Ikon Email -->
@@ -61,7 +62,7 @@
                         <span>Edit Data</span>
                     </a>
 
-                    <form id="delete-form" action="{{ route('ujian.bulkDelete') }}" method="POST" class="hidden">
+                    <form id="delete-form" action="{{ route('tendik.bulkDelete') }}" method="POST" class="hidden">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="ids" id="delete-ids">
@@ -79,15 +80,15 @@
                     </form>
 
                     @if(auth()->user()->role === 'superadmin')
-                        <a href="{{ route('ujian.create') }}" 
-                        class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
-                                border border-[#174A6F] rounded-lg px-3 py-2 
-                                hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
-                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                            </svg>
-                            <span>Tambah Data</span>
+                        <a href="{{ route('tendik.create') }}" 
+                            class="flex items-center space-x-2 text-[#174A6F] font-medium cursor-pointer 
+                                    border border-[#174A6F] rounded-lg px-3 py-2 
+                                    hover:bg-[#174A6F] hover:text-white transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                <span>Tambah Data</span>
                         </a>
                     @endif
                     {{-- Menu Export !!!Pending --}}
@@ -114,30 +115,7 @@
                     </button>
                 </div>
             </div>
-            <!-- Filter Semester -->
-            <form method="GET" action="{{ route('ujian.index') }}" class="mb-4">
-                <div class="relative w-64">
-                    <select name="semester" 
-                        class="w-full px-3 py-2 ml-6 mt-5 pr-10 border rounded-lg appearance-none focus:ring-2 focus:ring-[#1F4E79]"
-                        onchange="this.form.submit()">
-                        <option value="">-- Semua Semester --</option>
-                        <option value="Gasal 2021/2022" {{ $semester == 'Gasal 2021/2022' ? 'selected' : '' }}>Gasal 2021/2022</option>
-                        <option value="Genap 2021/2022" {{ $semester == 'Genap 2021/2022' ? 'selected' : '' }}>Genap 2021/2022</option>
-                        <option value="Gasal 2022/2023" {{ $semester == 'Gasal 2022/2023' ? 'selected' : '' }}>Gasal 2022/2023</option>
-                        <option value="Genap 2022/2023" {{ $semester == 'Genap 2022/2023' ? 'selected' : '' }}>Genap 2022/2023</option>
-                    </select>
-
-                    <!-- Panah custom -->
-                    <div class="absolute inset-y-0 right-0 top-5 flex items-center pointer-events-none text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
-                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </div>
-                </div>
-            </form>
-            
-            <div class="pl-6 pr-6 pb-6 pt-2">
+            <div class="p-6">
                 @if(session('success'))
                     <div class="bg-green-100 text-green-700 p-2 rounded mb-4">
                         {{ session('success') }}
@@ -155,33 +133,35 @@
                             {{-- <th class="p-2 border"></th> --}}
                             <th class="p-2 border">Nama</th>
                             <th class="p-2 border">Fakultas</th>
-                            <th class="p-2 border">Semester</th>
+                            <th class="p-2 border">Pendidikan</th>
+                            <th class="p-2 border">Angkatan</th>
                             <th class="p-2 border">Jenis Disabilitas</th>
-                            <th class="p-2 border">Surat Hasil Asesmen</th>
+                            <th class="p-2 border">Surat Disabilitas</th>
                             <th class="p-2 border">Detail</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($data as $asesmen_ujian)
+                        @foreach($tendiks as $tendik)
                         <tr>
                             @if(auth()->user()->role === 'superadmin')
                                 <td class="p-2 border text-center">
-                                    <input type="checkbox" class="select-mahasiswa" value="{{ $asesmen_ujian->id }}">
+                                    <input type="checkbox" class="select-mahasiswa" value="{{ $tendik->id }}">
                                 </td>
                             @endif
-                            <td class="p-2 border">{{ $asesmen_ujian->nama }}</td>
-                            <td class="p-2 border">{{ $asesmen_ujian->fakultas }}</td>
-                            <td class="p-2 border">{{ $asesmen_ujian->semester }}</td>
-                            <td class="p-2 border">{{ $asesmen_ujian->ragam_disabilitas }}</td>
+                            <td class="p-2 border">{{ $tendik->nama }}</td>
+                            <td class="p-2 border">{{ $tendik->fakultas }}</td>
+                            <td class="p-2 border">{{ $tendik->pendidikan }}</td>
+                            <td class="p-2 border">{{ $tendik->angkatan }}</td>
+                            <td class="p-2 border">{{ $tendik->ragam_disabilitas }}</td>
                             <td class="p-2 border text-center">
-                                <a href="{{ route('asesmen_ujian.pdf', $asesmen_ujian->id) }}" 
+                                <a href="{{ route('tendik.pdf', $tendik->id) }}" 
                                     class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
                                     Download PDF
                                 </a>
                             </td>
                             {{-- <td class="border text-center">
-                                @if($alumni->surat_keterangan)
-                                <a href="{{ route('mahasiswa.download', $alumni->id) }}" class="text-blue-600 hover:underline">
+                                @if($tendik->surat_keterangan)
+                                <a href="{{ route('mahasiswa.download', $tendik->id) }}" class="text-blue-600 hover:underline">
                                     Download PDF
                                 </a>
                                 @else
@@ -189,7 +169,7 @@
                                 @endif
                             </td> --}}
                             <td class="p-2 border text-center">
-                                <a href="{{ route('ujian.show', $asesmen_ujian->id) }}" 
+                                <a href="{{ route('tendik.show', $tendik->id) }}" 
                                 class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" 
                                         class="h-4 w-4 mr-1" 
@@ -229,7 +209,7 @@
             // Toggle Edit (hanya 1 terpilih)
             if (selected.length === 1) {
                 editBtn.classList.remove("hidden");
-                editBtn.href = "/asesmen-ujian/" + selected[0] + "/edit";
+                editBtn.href = "/tendik/" + selected[0] + "/edit";
             } else {
                 editBtn.classList.add("hidden");
                 editBtn.href = "#";
