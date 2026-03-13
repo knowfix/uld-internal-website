@@ -5,32 +5,31 @@
 @section('content')
     <!-- Main Content -->
     <main class="flex-1 bg-gray-100 flex flex-col">
-        <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
+        <div class="flex justify-between w-full items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
             <!-- Home Simple -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="7" height="9" rx="1"/>
-                    <rect x="14" y="3" width="7" height="5" rx="1"/>
-                    <rect x="14" y="12" width="7" height="9" rx="1"/>
-                    <rect x="3" y="16" width="7" height="5" rx="1"/>
-            </svg>
+            <div class="flex items-center space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="9" rx="1"/>
+                        <rect x="14" y="3" width="7" height="5" rx="1"/>
+                        <rect x="14" y="12" width="7" height="9" rx="1"/>
+                        <rect x="3" y="16" width="7" height="5" rx="1"/>
+                </svg>
 
-            <!-- Teks -->
-            <span class="font-medium text-2xl">Data Asesmen Kebutuhan Ujian Mahasiswa</span>
-            <!-- Narahubung (kanan) -->
-            <div class="ml-auto flex items-center space-x-3 text-sm">
-                <!-- Ikon Email -->
-                <!-- Ikon WhatsApp -->
-                <a href="https://wa.me/6282227021332" target="_blank"
-                class="flex items-center space-x-1 hover:text-gray-200 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
-                    </svg>
-                    <span>Hubungi Kami</span>
-                </a>
+                <!-- Teks -->
+                <span class="font-medium text-2xl">Data Asesmen Kebutuhan Ujian Mahasiswa</span>
             </div>
+
+            <!-- Narahubung (kanan) -->
+            <a href="https://wa.me/6282227021332" target="_blank"
+            class="flex items-center space-x-1 hover:text-gray-200 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
+                </svg>
+                <span>Hubungi Kami</span>
+            </a>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
@@ -147,7 +146,7 @@
 
                     <!-- Tombol -->
                     <div class="mt-6">
-                        <button type="submit" class="bg-[#174A6F] text-white px-4 py-2 rounded-lg">
+                        <button type="submit" id="submitBtn" class="bg-[#174A6F] text-white px-4 py-2 rounded-lg">
                             Simpan
                         </button>
                     </div>
@@ -158,60 +157,64 @@
     </main>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const checkboxes = document.querySelectorAll(".select-mahasiswa");
-    const editBtn = document.getElementById("edit-btn");
-    const deleteForm = document.getElementById("delete-form");
-    const deleteIds = document.getElementById("delete-ids");
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll(".select-mahasiswa");
+        const editBtn = document.getElementById("edit-btn");
+        const deleteForm = document.getElementById("delete-form");
+        const deleteIds = document.getElementById("delete-ids");
 
-    checkboxes.forEach(cb => {
-        cb.addEventListener("change", function () {
-            let selected = [];
-            document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
-                selected.push(el.value);
+        checkboxes.forEach(cb => {
+            cb.addEventListener("change", function () {
+                let selected = [];
+                document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
+                    selected.push(el.value);
+                });
+
+                // Toggle Edit (hanya 1 terpilih)
+                if (selected.length === 1) {
+                    editBtn.classList.remove("hidden");
+                    editBtn.href = "/alumni/" + selected[0] + "/edit";
+                } else {
+                    editBtn.classList.add("hidden");
+                    editBtn.href = "#";
+                }
+
+                // Toggle Delete (boleh >0)
+                if (selected.length > 0) {
+                    deleteForm.classList.remove("hidden");
+                    deleteIds.value = selected.join(","); // kirim ID array
+                } else {
+                    deleteForm.classList.add("hidden");
+                    deleteIds.value = "";
+                }
             });
-
-            // Toggle Edit (hanya 1 terpilih)
-            if (selected.length === 1) {
-                editBtn.classList.remove("hidden");
-                editBtn.href = "/alumni/" + selected[0] + "/edit";
-            } else {
-                editBtn.classList.add("hidden");
-                editBtn.href = "#";
-            }
-
-            // Toggle Delete (boleh >0)
-            if (selected.length > 0) {
-                deleteForm.classList.remove("hidden");
-                deleteIds.value = selected.join(","); // kirim ID array
-            } else {
-                deleteForm.classList.add("hidden");
-                deleteIds.value = "";
-            }
         });
     });
-});
-function toggleUserMenu() {
-    const menu = document.getElementById('user-menu');
-    menu.classList.toggle('hidden');
-}
-</script>
+    function toggleUserMenu() {
+        const menu = document.getElementById('user-menu');
+        menu.classList.toggle('hidden');
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        const mahasiswaSelect = document.getElementById('mahasiswaSelect');
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const mahasiswaSelect = document.getElementById('mahasiswaSelect');
-
-    mahasiswaSelect.addEventListener('change', function() {
-        const selected = this.options[this.selectedIndex];
-        document.getElementById('nama').value = selected.dataset.nama || '';
-        document.getElementById('jenis_kelamin').value = selected.dataset.jenis_kelamin || '';
-        document.getElementById('tanggal_lahir').value = selected.dataset.tanggal_lahir || '';
-        document.getElementById('nim').value = selected.dataset.nim || '';
-        document.getElementById('prodi').value = selected.dataset.prodi || '';
-        document.getElementById('fakultas').value = selected.dataset.fakultas || '';
-        document.getElementById('ragam_disabilitas').value = selected.dataset.ragam || '';
+        mahasiswaSelect.addEventListener('change', function() {
+            const selected = this.options[this.selectedIndex];
+            document.getElementById('nama').value = selected.dataset.nama || '';
+            document.getElementById('jenis_kelamin').value = selected.dataset.jenis_kelamin || '';
+            document.getElementById('tanggal_lahir').value = selected.dataset.tanggal_lahir || '';
+            document.getElementById('nim').value = selected.dataset.nim || '';
+            document.getElementById('prodi').value = selected.dataset.prodi || '';
+            document.getElementById('fakultas').value = selected.dataset.fakultas || '';
+            document.getElementById('ragam_disabilitas').value = selected.dataset.ragam || '';
+        });
     });
-});
-</script>
 
+    // Disable submit button after cliked
+    document.querySelector("form").addEventListener("submit", function() {
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.innerText = "Menyimpan...";
+    });
+
+</script>
 @endsection
