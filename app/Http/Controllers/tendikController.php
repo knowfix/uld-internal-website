@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tendik;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,11 +32,22 @@ class tendikController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'nim' => 'required|string|max:20|unique:mahasiswas',
-            'surat_keterangan' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+            'nim' => 'required|string|max:20',
         ]);
 
         $data = $request->all();
+
+        try {
+            $tendik = Tendik::create($data);
+        } catch (QueryException $e) {
+
+            if ($e->errorInfo[1] == 1062) {
+                return redirect()->route('tendik.index')
+                    ->with('error', 'Data dengan NIP tersebut sudah tersimpan sebelumnya.');
+            }
+
+            throw $e;
+        }
 
         // Upload file jika ada
         if ($request->hasFile('surat_keterangan')) {
@@ -156,7 +168,7 @@ class tendikController extends Controller
         Storage::put($pdfPath, $pdf->output());
         $tendik->update(['pdf_path' => $pdfPath]);
 
-        return redirect()->route('dosen_tendik.index')->with('success', 'Data tendik berhasil diperbarui!');
+        return redirect()->route('tendik.index')->with('success', 'Data tendik berhasil diperbarui!');
     }
     public function show($id)
     {
