@@ -98,6 +98,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dosen-tendik/bulk-delete', [tendikController::class, 'bulkDelete'])
         ->name('tendik.bulkDelete');
     // Form edit
-    Route::get('/dosen-tendik/{id}/edit', [tendikController::class, 'edit'])->name('tendik.edit');
+    Route::get('/tendik/{id}/edit', [tendikController::class, 'edit'])->name('tendik.edit');
     
 });
