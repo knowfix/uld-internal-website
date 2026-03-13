@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumni;
-use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -20,11 +21,22 @@ class MahasiswaController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'nim' => 'required|string|max:20|unique:mahasiswas',
-            'surat_keterangan' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+            'nim' => 'required|string|max:20',
         ]);
 
         $data = $request->all();
+
+        try {
+            $asesmen_ujian = Mahasiswa::create($data);
+        } catch (QueryException $e) {
+
+            if ($e->errorInfo[1] == 1062) {
+                return redirect()->route('mahasiswa.index')
+                    ->with('error', 'Data dengan NIM tersebut sudah tersimpan sebelumnya.');
+            }
+
+            throw $e;
+        }
 
         // Upload file jika ada
         if ($request->hasFile('surat_keterangan')) {
