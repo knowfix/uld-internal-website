@@ -31,7 +31,7 @@
         </p>
         <p style="margin: 2px 0;"><span>Fakultas</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $tendik->fakultas ?? '-' }}</p>
         <p style="margin: 2px 0;"><span>Prodi</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $tendik->prodi ?? '-' }}</p>
-        <p style="margin: 2px 0;"><span>NIM</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $tendik->nim }}</p>
+        <p style="margin: 2px 0;"><span>NIP</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $tendik->nim }}</p>
     </div>
 
     <div class="section">
@@ -40,7 +40,7 @@
     </div>
 
     <div class="section">
-        <p style="margin: 2px 0;"><b>Kesulitan yang dialami saat belajar:</b></p>
+        <p style="margin: 2px 0;"><b>Kesulitan yang dialami saat mengajar:</b></p>
         <p style="margin: 2px 0; text-align: justify;">{{ $tendik->kendala ?? '-' }}</p>
     </div>
 

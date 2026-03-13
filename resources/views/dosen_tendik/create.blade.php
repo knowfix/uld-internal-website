@@ -95,7 +95,7 @@
                             <input type="text" name="pendidikan" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
                         </div>
                         <div>
-                            <label class="block font-medium text-[#083D62]">Angkatan</label>
+                            <label class="block font-medium text-[#083D62]">Tahun Masuk</label>
                             <input type="text" name="angkatan" class="w-full border rounded-2xl p-2  mt-1 h-13" required>
                         </div>
                         
@@ -143,7 +143,7 @@
                         </div>
 
                         <div class="col-span-2">
-                            <label class="block font-medium text-[#083D62]">Kesulitan/Kendala saat proses belajar</label>
+                            <label class="block font-medium text-[#083D62]">Kesulitan/Kendala saat mengajar</label>
                             <textarea name="kendala" class="w-full border rounded-2xl p-2 mt-2"></textarea>
                         </div>
 

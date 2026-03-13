@@ -20,7 +20,7 @@ class tendikController extends Controller
 
         Tendik::whereIn('id', $ids)->delete();
 
-        return redirect()->route('dosen_tendik.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('tendik.index')->with('success', 'Data berhasil dihapus.');
     }
     public function create()
     {
@@ -63,7 +63,7 @@ class tendikController extends Controller
         // Update path pdf ke mahasiswa
         $tendik->update(['pdf_path' => $pdfPath]);
 
-        return redirect()->route('dosen_tendik.index')->with('success', 'Data tendik berhasil ditambahkan!');
+        return redirect()->route('tendik.index')->with('success', 'Data tendik berhasil ditambahkan!');
     }
     public function download($id)
     {
