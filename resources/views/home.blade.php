@@ -75,7 +75,7 @@
             <h3 class="font-semibold mb-2">Jumlah Mahasiswa Disabilitas per Tahun</h3>
             <canvas id="chartTahun" class="w-full h-full"></canvas>
         </div>
-        <div class="bg-white rounded-xl shadow p-4 h-  flex flex-col">
+        <div class="bg-white rounded-xl shadow p-4 h-80  flex flex-col">
             <h3 class="font-semibold mb-2">Ragam Disabilitas</h3>
             <canvas id="chartPie" class="w-full h-full"></canvas>
         </div>
@@ -208,6 +208,7 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             layout: {
                 padding: {
                     bottom: 20, // tambahin jarak bawah biar label tidak mepet
@@ -215,7 +216,7 @@
             },
             plugins: {
                 legend: {
-                    position: 'bottom',
+                    position: 'right',
                     labels: {
                         boxWidth: 20,
                         padding: 15
