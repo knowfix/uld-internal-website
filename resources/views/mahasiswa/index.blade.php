@@ -5,39 +5,36 @@
 @section('content')
 <!-- Main Content -->
 <main class="flex-1 bg-gray-100 flex flex-col">
-    <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
+    <div class="flex justify-between w-full items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
         <!-- Home Simple -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
-                <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
-        </svg>
-
-        <!-- Teks -->
-        <span class="font-medium text-2xl">Data Mahasiswa</span>
+        <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                    <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
+                    <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
+            </svg>     
+            <!-- Teks -->
+            <span class="font-medium text-2xl">Data Mahasiswa</span>
+        </div>
 
         <!-- Narahubung (kanan) -->
-        <div class="ml-auto flex items-center space-x-3 text-sm">
-            <!-- Ikon Email -->
-            <!-- Ikon WhatsApp -->
-            <a href="https://wa.me/6282227021332" target="_blank"
-            class="flex items-center space-x-1 hover:text-gray-200 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
-                </svg>
-                <span>Hubungi Kami</span>
-            </a>
-        </div>
+        <a href="https://wa.me/6282227021332" target="_blank"
+        class="flex items-center space-x-1 hover:text-gray-200 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
+            </svg>
+            <span>Hubungi Kami</span>
+        </a>
     </div>
 
     <div class="flex-1 overflow-y-auto bg-gray-100">
         <div class="bg-[#EAF3FA] px-6 py-3 flex items-center justify-between">
             <!-- Search -->
             <div class="relative w-72">
-                <input type="text" placeholder="Cari mahasiswa...."
+                <input id="searchMahasiswa" type="text" placeholder="Cari mahasiswa...."
                     class="w-full pl-4 pr-10 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1F4E79] focus:outline-none" />
                 <button class="absolute right-3 top-2 text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,7 +136,7 @@
                                 <input type="checkbox" id="select-all">
                             </th>
                         @endif
-                        {{-- <th class="p-2 border"></th> --}}
+                        <th class="p-2 border text-center">No.</th>
                         <th class="p-2 border">Nama</th>
                         <th class="p-2 border">Fakultas</th>
                         <th class="p-2 border">Pendidikan</th>
@@ -149,7 +146,7 @@
                         <th class="p-2 border">Detail</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableMahasiswa">
                     @foreach($mahasiswas as $mhs)
                     <tr>
                         @if(auth()->user()->role === 'superadmin')
@@ -157,6 +154,9 @@
                                 <input type="checkbox" class="select-mahasiswa" value="{{ $mhs->id }}">
                             </td>
                         @endif
+                        <td class="p-2 border text-center">
+                            {{ $loop -> iteration }}
+                        </td>
                         <td class="p-2 border">{{ $mhs->nama }}</td>
                         <td class="p-2 border">{{ $mhs->fakultas }}</td>
                         <td class="p-2 border">{{ $mhs->pendidikan }}</td>
@@ -202,61 +202,80 @@
 </main>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const alumniForm = document.getElementById("alumni-form");
-    const alumniIds = document.getElementById("alumni-ids"); //alumni
-    const selectAll = document.getElementById("select-all"); // header checkbox
-    const checkboxes = document.querySelectorAll(".select-mahasiswa");
-    const editBtn = document.getElementById("edit-btn");
-    const deleteForm = document.getElementById("delete-form");
-    const deleteIds = document.getElementById("delete-ids");
+    document.addEventListener("DOMContentLoaded", function () {
+        const alumniForm = document.getElementById("alumni-form");
+        const alumniIds = document.getElementById("alumni-ids"); //alumni
+        const selectAll = document.getElementById("select-all"); // header checkbox
+        const checkboxes = document.querySelectorAll(".select-mahasiswa");
+        const editBtn = document.getElementById("edit-btn");
+        const deleteForm = document.getElementById("delete-form");
+        const deleteIds = document.getElementById("delete-ids");
 
-    function updateSelection() {
-        let selected = [];
-        document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
-            selected.push(el.value);
+        function updateSelection() {
+            let selected = [];
+            document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
+                selected.push(el.value);
+            });
+
+            // Toggle Edit (hanya 1 terpilih)
+            if (selected.length === 1) {
+                editBtn.classList.remove("hidden");
+                editBtn.href = "/mahasiswa/" + selected[0] + "/edit";
+            } else {
+                editBtn.classList.add("hidden");
+                editBtn.href = "#";
+            }
+
+            // Toggle Delete (boleh >0)
+            if (selected.length > 0) {
+                deleteForm.classList.remove("hidden");
+                deleteIds.value = selected.join(","); // kirim ID array
+                alumniForm.classList.remove("hidden");
+                alumniIds.value = selected.join(",");
+            } else {
+                deleteForm.classList.add("hidden");
+                deleteIds.value = "";
+                alumniForm.classList.add("hidden");
+                alumniIds.value = "";
+            }
+        }
+
+        // Checkbox tiap baris
+        checkboxes.forEach(cb => {
+            cb.addEventListener("change", updateSelection);
         });
 
-        // Toggle Edit (hanya 1 terpilih)
-        if (selected.length === 1) {
-            editBtn.classList.remove("hidden");
-            editBtn.href = "/mahasiswa/" + selected[0] + "/edit";
-        } else {
-            editBtn.classList.add("hidden");
-            editBtn.href = "#";
+        // Checkbox "select all"
+        if (selectAll) {
+            selectAll.addEventListener("change", function () {
+                checkboxes.forEach(cb => cb.checked = this.checked);
+                updateSelection();
+            });
         }
-
-        // Toggle Delete (boleh >0)
-        if (selected.length > 0) {
-            deleteForm.classList.remove("hidden");
-            deleteIds.value = selected.join(","); // kirim ID array
-            alumniForm.classList.remove("hidden");
-            alumniIds.value = selected.join(",");
-        } else {
-            deleteForm.classList.add("hidden");
-            deleteIds.value = "";
-            alumniForm.classList.add("hidden");
-            alumniIds.value = "";
-        }
+    });
+    function toggleUserMenu() {
+        const menu = document.getElementById('user-menu');
+        menu.classList.toggle('hidden');
     }
+</script>
+<script>
+document.getElementById("searchMahasiswa").addEventListener("keyup", function() {
 
-    // Checkbox tiap baris
-    checkboxes.forEach(cb => {
-        cb.addEventListener("change", updateSelection);
+    let keyword = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#tableMahasiswa tr");
+
+    rows.forEach(function(row) {
+
+        let text = row.textContent.toLowerCase();
+
+        if (text.includes(keyword)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+
     });
 
-    // Checkbox "select all"
-    if (selectAll) {
-        selectAll.addEventListener("change", function () {
-            checkboxes.forEach(cb => cb.checked = this.checked);
-            updateSelection();
-        });
-    }
 });
-function toggleUserMenu() {
-    const menu = document.getElementById('user-menu');
-    menu.classList.toggle('hidden');
-}
 </script>
-
 @endsection
