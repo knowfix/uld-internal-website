@@ -176,43 +176,50 @@
     </main>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const checkboxes = document.querySelectorAll(".select-mahasiswa");
-    const editBtn = document.getElementById("edit-btn");
-    const deleteForm = document.getElementById("delete-form");
-    const deleteIds = document.getElementById("delete-ids");
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll(".select-mahasiswa");
+        const editBtn = document.getElementById("edit-btn");
+        const deleteForm = document.getElementById("delete-form");
+        const deleteIds = document.getElementById("delete-ids");
 
-    checkboxes.forEach(cb => {
-        cb.addEventListener("change", function () {
-            let selected = [];
-            document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
-                selected.push(el.value);
+        checkboxes.forEach(cb => {
+            cb.addEventListener("change", function () {
+                let selected = [];
+                document.querySelectorAll(".select-mahasiswa:checked").forEach(el => {
+                    selected.push(el.value);
+                });
+
+                // Toggle Edit (hanya 1 terpilih)
+                if (selected.length === 1) {
+                    editBtn.classList.remove("hidden");
+                    editBtn.href = "/alumni/" + selected[0] + "/edit";
+                } else {
+                    editBtn.classList.add("hidden");
+                    editBtn.href = "#";
+                }
+
+                // Toggle Delete (boleh >0)
+                if (selected.length > 0) {
+                    deleteForm.classList.remove("hidden");
+                    deleteIds.value = selected.join(","); // kirim ID array
+                } else {
+                    deleteForm.classList.add("hidden");
+                    deleteIds.value = "";
+                }
             });
-
-            // Toggle Edit (hanya 1 terpilih)
-            if (selected.length === 1) {
-                editBtn.classList.remove("hidden");
-                editBtn.href = "/alumni/" + selected[0] + "/edit";
-            } else {
-                editBtn.classList.add("hidden");
-                editBtn.href = "#";
-            }
-
-            // Toggle Delete (boleh >0)
-            if (selected.length > 0) {
-                deleteForm.classList.remove("hidden");
-                deleteIds.value = selected.join(","); // kirim ID array
-            } else {
-                deleteForm.classList.add("hidden");
-                deleteIds.value = "";
-            }
         });
     });
-});
-function toggleUserMenu() {
-    const menu = document.getElementById('user-menu');
-    menu.classList.toggle('hidden');
-}
+    function toggleUserMenu() {
+        const menu = document.getElementById('user-menu');
+        menu.classList.toggle('hidden');
+    }
+
+    // Disable submit button after cliked
+    document.querySelector("form").addEventListener("submit", function() {
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.innerText = "Menyimpan...";
+    });
 </script>
 
 @endsection
