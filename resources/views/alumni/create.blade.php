@@ -5,33 +5,32 @@
 @section('content')
     <!-- Main Content -->
     <main class="flex-1 bg-gray-100 flex flex-col">
-        <div class="flex items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
+        <div class="flex justify-between w-full items-center space-x-3 bg-[#1B4E71] text-white px-6 py-2 cursor-pointer h-18">
             <!-- Home Simple -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
-                        fill="none" viewBox="0 0 24 24" 
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M22 10l-10-5L2 10l10 5 10-5z" 
-                            class=" group-hover:stroke-white"/>
-                        <path d="M6 12v5c3 3 9 3 12 0v-5" 
-                            class=" group-hover:stroke-white"/>
-            </svg>
-
-            <!-- Teks -->
-            <span class="font-medium text-2xl">Data Alumni</span>
-            <!-- Narahubung (kanan) -->
-            <div class="ml-auto flex items-center space-x-3 text-sm">
-                <!-- Ikon Email -->
-                <!-- Ikon WhatsApp -->
-                <a href="https://wa.me/6282227021332" target="_blank"
-                class="flex items-center space-x-1 hover:text-gray-200 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
-                    </svg>
-                    <span>Hubungi Kami</span>
-                </a>
+            <div class="flex items-center space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" 
+                            fill="none" viewBox="0 0 24 24" 
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M22 10l-10-5L2 10l10 5 10-5z" 
+                                class=" group-hover:stroke-white"/>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" 
+                                class=" group-hover:stroke-white"/>
+                </svg>
+                
+                <!-- Teks -->
+                <span class="font-medium text-2xl">Data Alumni</span>
             </div>
+
+            <!-- Narahubung (kanan) -->
+            <a href="https://wa.me/6282227021332" target="_blank"
+            class="flex items-center space-x-1 hover:text-gray-200 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 21l1.2-4.2A8.959 8.959 0 015 4a8.959 8.959 0 0112.728 12.728A8.959 8.959 0 018.8 19.8L4.2 21z" />
+                </svg>
+                <span>Hubungi Kami</span>
+            </a>
         </div>
 
         <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
