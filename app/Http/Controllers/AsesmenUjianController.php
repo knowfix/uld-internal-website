@@ -7,6 +7,8 @@ use App\Models\Mahasiswa;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\QueryException;
+
 
 class AsesmenUjianController extends Controller
 {
@@ -33,6 +35,7 @@ class AsesmenUjianController extends Controller
     }
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:20',
@@ -40,33 +43,30 @@ class AsesmenUjianController extends Controller
 
         $data = $request->all();
 
-        // Upload file jika ada
-        // if ($request->hasFile('surat_keterangan')) {
-        //     $file = $request->file('surat_keterangan');
-        //     $filename = time() . '_' . $file->getClientOriginalName();
+        try {
+            $asesmen_ujian = AsesmenUjian::create($data);
+        } catch (QueryException $e) {
 
-        //     // simpan ke storage/app/private/surat_keterangan
-        //     $file->storeAs('private/surat_keterangan', $filename);
+            if ($e->errorInfo[1] == 1062) {
+                return redirect()->route('ujian.index')
+                    ->with('error', 'Data dengan NIM tersebut sudah tersimpan sebelumnya.');
+            }
 
-        //     // masukkan ke array data
-        //     $data['surat_keterangan'] = $filename;
-        // }
-        // Simpan mahasiswa ke database
-        $asesmen_ujian = AsesmenUjian::create($data);
+            throw $e;
+        }
 
-        // === Generate PDF otomatis ===
+        // Generate PDF
         $pdf = Pdf::loadView('ujian.pdf', compact('asesmen_ujian'));
 
         $pdfFilename = 'asesmen_ujian_' . preg_replace('/[\/\\\\]/', '-', $asesmen_ujian->nim) . '.pdf';
         $pdfPath = 'private/pdf_asesmen_ujian/' . $pdfFilename;
 
-        // Simpan ke storage/app/private/pdf_mahasiswa
         Storage::put($pdfPath, $pdf->output());
 
-        // Update path pdf ke mahasiswa
         $asesmen_ujian->update(['pdf_path' => $pdfPath]);
 
-        return redirect()->route('ujian.index')->with('success', 'Data asesmen ujian mahasiswa berhasil ditambahkan!');
+        return redirect()->route('ujian.index')
+            ->with('success', 'Data asesmen ujian mahasiswa berhasil ditambahkan!');
     }
 
     public function download($id)
