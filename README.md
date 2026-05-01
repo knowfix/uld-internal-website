@@ -57,7 +57,7 @@ php artisan key:generate
 2. Import database:
 
 ```bash
-mysql -u root -p laravel_db < data.sql
+mysql -u root -p laravel_db < backup.sql
 ```
 
 3. Sesuaikan `.env`:
